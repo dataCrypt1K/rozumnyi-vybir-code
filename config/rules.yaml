@@ -1,0 +1,97 @@
+{
+  "schema_version": "0.1",
+  "format_note": "JSON-compatible YAML 1.2; readable by the Python standard library.",
+  "review_status": "approved_for_prototype_by_user",
+  "review_date": "2026-10-04",
+  "base_score": 50,
+  "status_thresholds": {
+    "recommended": 70,
+    "optional": 40
+  },
+  "review_difference": 25,
+  "systems": {
+    "climate_control": {
+      "factor_group_caps": {
+        "equipment": 15,
+        "comfort": 25,
+        "efficiency": 20,
+        "control": 10
+      },
+      "hard_rules": [
+        {
+          "rule_id": "CLIMATE_NO_EQUIPMENT",
+          "all": [
+            {"question_id": "heating_systems", "operator": "contains", "value": "none"},
+            {"question_id": "cooling_systems", "operator": "contains", "value": "none"}
+          ],
+          "result": "not_applicable",
+          "reason": "Не вказано наявного або запланованого обладнання для керування кліматом."
+        }
+      ],
+      "score_rules": [
+        {"rule_id": "CLIMATE_HEATING_PRESENT", "question_id": "heating_systems", "operator": "not_contains", "value": "none", "points": 10, "factor_group": "equipment", "reason": "Є обладнання опалення, яке можна автоматизувати."},
+        {"rule_id": "CLIMATE_COOLING_PRESENT", "question_id": "cooling_systems", "operator": "not_contains", "value": "none", "points": 10, "factor_group": "equipment", "reason": "Є обладнання охолодження, яке можна автоматизувати."},
+        {"rule_id": "CLIMATE_PRECONDITION_HIGH", "question_id": "precondition_home", "operator": "gte", "value": 4, "points": 10, "factor_group": "comfort", "reason": "Важливо готувати комфортну температуру до повернення."},
+        {"rule_id": "CLIMATE_ZONING_HIGH", "question_id": "zoned_temperature", "operator": "gte", "value": 4, "points": 15, "factor_group": "comfort", "reason": "Потрібна окрема температура для різних кімнат."},
+        {"rule_id": "CLIMATE_OCCUPANCY_HIGH", "question_id": "occupancy_based_climate", "operator": "gte", "value": 4, "points": 15, "factor_group": "efficiency", "reason": "Потрібне автоматичне зниження споживання у порожніх кімнатах."},
+        {"rule_id": "CLIMATE_ENERGY_HIGH", "question_id": "energy_priority", "operator": "gte", "value": 4, "points": 10, "factor_group": "efficiency", "reason": "Енергоефективність має високий пріоритет."},
+        {"rule_id": "CLIMATE_REMOTE_HIGH", "question_id": "remote_control_interest", "operator": "gte", "value": 4, "points": 5, "factor_group": "control", "reason": "Важливе дистанційне керування кліматом."},
+        {"rule_id": "CLIMATE_LOW_INTEREST", "question_id": "comfort_priority", "operator": "lte", "value": 2, "points": -10, "factor_group": "comfort", "reason": "Комфорт має низький пріоритет."}
+      ]
+    },
+    "smart_lighting": {
+      "factor_group_caps": {
+        "scale": 15,
+        "comfort": 25,
+        "automation": 25,
+        "decorative": 5
+      },
+      "hard_rules": [],
+      "score_rules": [
+        {"rule_id": "LIGHT_GROUPS_MEDIUM", "question_id": "lighting_group_count", "operator": "equals", "value": "four_to_eight", "points": 10, "factor_group": "scale", "reason": "Кілька груп освітлення роблять централізоване керування кориснішим."},
+        {"rule_id": "LIGHT_GROUPS_HIGH", "question_id": "lighting_group_count", "operator": "equals", "value": "nine_or_more", "points": 15, "factor_group": "scale", "reason": "Велика кількість груп освітлення підвищує користь автоматизації."},
+        {"rule_id": "LIGHT_DIMMING_HIGH", "question_id": "dimming_interest", "operator": "gte", "value": 4, "points": 10, "factor_group": "comfort", "reason": "Потрібне регулювання яскравості."},
+        {"rule_id": "LIGHT_COLOR_TEMP_HIGH", "question_id": "color_temperature_interest", "operator": "gte", "value": 4, "points": 10, "factor_group": "comfort", "reason": "Потрібна зміна колірної температури."},
+        {"rule_id": "LIGHT_PRESENCE_HIGH", "question_id": "presence_lighting_interest", "operator": "gte", "value": 4, "points": 15, "factor_group": "automation", "reason": "Потрібне автоматичне світло за присутністю."},
+        {"rule_id": "LIGHT_SCENES_HIGH", "question_id": "lighting_scenes_interest", "operator": "gte", "value": 4, "points": 15, "factor_group": "automation", "reason": "Користувач зацікавлений у сценаріях освітлення."},
+        {"rule_id": "LIGHT_RGB_HIGH", "question_id": "rgb_interest", "operator": "gte", "value": 4, "points": 5, "factor_group": "decorative", "reason": "Потрібне декоративне RGB-освітлення."},
+        {"rule_id": "LIGHT_AUTOMATION_LOW", "question_id": "automation_interest", "operator": "lte", "value": 2, "points": -15, "factor_group": "automation", "reason": "Автоматичні сценарії не становлять цінності для користувача."},
+        {"rule_id": "LIGHT_FEATURES_LOW", "all": [
+          {"question_id": "dimming_interest", "operator": "lte", "value": 2},
+          {"question_id": "presence_lighting_interest", "operator": "lte", "value": 2},
+          {"question_id": "lighting_scenes_interest", "operator": "lte", "value": 2}
+        ], "points": -15, "factor_group": "comfort", "reason": "Ключові функції розумного освітлення не потрібні."}
+      ]
+    },
+    "leak_protection": {
+      "factor_group_caps": {
+        "objective_risk": 35,
+        "lifestyle": 15,
+        "preference": 15
+      },
+      "hard_rules": [
+        {
+          "rule_id": "LEAK_NO_WATER_ZONES",
+          "all": [
+            {"question_id": "water_zones", "operator": "equals", "value": 0}
+          ],
+          "result": "not_applicable",
+          "reason": "У профілі не зазначено водних зон."
+        }
+      ],
+      "score_rules": [
+        {"rule_id": "LEAK_PREVIOUS_INCIDENT", "question_id": "previous_leak", "operator": "equals", "value": true, "points": 25, "factor_group": "objective_risk", "reason": "Раніше вже було протікання або затоплення."},
+        {"rule_id": "LEAK_MULTIPLE_ZONES", "question_id": "water_zones", "operator": "gte", "value": 3, "points": 10, "factor_group": "objective_risk", "reason": "Кілька водних зон збільшують кількість можливих місць аварії."},
+        {"rule_id": "LEAK_APARTMENT", "question_id": "property_type", "operator": "equals", "value": "apartment", "points": 10, "factor_group": "objective_risk", "reason": "У квартирі протікання може пошкодити сусідні приміщення."},
+        {"rule_id": "LEAK_ABSENCE_OFTEN", "question_id": "absence_frequency", "operator": "in", "value": ["often", "extended"], "points": 15, "factor_group": "lifestyle", "reason": "Житло часто залишається без нагляду."},
+        {"rule_id": "LEAK_SHUTOFF_HIGH", "question_id": "automatic_shutoff_interest", "operator": "gte", "value": 4, "points": 15, "factor_group": "preference", "reason": "Користувач хоче автоматичне перекриття води."},
+        {"rule_id": "LEAK_SAFETY_HIGH", "question_id": "safety_priority", "operator": "gte", "value": 4, "points": 10, "factor_group": "preference", "reason": "Захист від аварій має високий пріоритет."},
+        {"rule_id": "LEAK_LOW_INTEREST", "all": [
+          {"question_id": "automatic_shutoff_interest", "operator": "lte", "value": 2},
+          {"question_id": "safety_priority", "operator": "lte", "value": 2},
+          {"question_id": "previous_leak", "operator": "equals", "value": false}
+        ], "points": -15, "factor_group": "preference", "reason": "Низький пріоритет безпеки та відсутність попередніх інцидентів."}
+      ]
+    }
+  }
+}

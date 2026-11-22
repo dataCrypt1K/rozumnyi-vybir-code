@@ -1,0 +1,15 @@
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+storage/
+output/
+tmp/
+.venv/
+*.log
+__pycache__/
+*.py[cod]
+.runtime_packages/
+.runtime_packages312/
+.research_packages/
+scripts/node_modules/

@@ -1,0 +1,3708 @@
+{
+  "schema_version": "0.1",
+  "review_status": "draft_for_expert_review",
+  "format_note": "JSON-compatible YAML 1.2. Questionnaire thresholds refer only to the existing 1..5 preference scale; factor values are transparent expert heuristics, not physical norms. Catalog scope and aliases are evaluated before function conditions.",
+  "phase_rules_version": "function_phase_v1",
+  "factor_scale": {
+    "min": 0,
+    "max": 2,
+    "meanings": {
+      "0": "фактор не змінює базовий пріоритет",
+      "1": "помірний вплив, що потребує контекстного підтвердження",
+      "2": "сильний експертний сигнал для детермінованих правил фази"
+    }
+  },
+  "condition_schema": {
+    "sources": {
+      "questionnaire": "answers.<question_id>",
+      "object": "assessment or current room/location fields",
+      "system_recommendation": "parent system recommendation fields",
+      "function": "derived function recommendation fields",
+      "factors": "the current function factors"
+    },
+    "operators": [
+      "equals",
+      "not_equals",
+      "contains",
+      "not_contains",
+      "in",
+      "gte",
+      "lte",
+      "exists"
+    ],
+    "expression_nodes": [
+      "all",
+      "any"
+    ],
+    "missing_value_result": "unknown",
+    "note": "A leaf is {source, field, operator, value}; all/any nodes may be nested. value is optional only for exists."
+  },
+  "aliases": {
+    "room_types": {
+      "basement": {
+        "ui_room_types": [
+          "basement"
+        ],
+        "resolution": "direct"
+      },
+      "bathroom": {
+        "ui_room_types": [
+          "bathroom"
+        ],
+        "resolution": "direct"
+      },
+      "bedroom": {
+        "ui_room_types": [
+          "bedroom",
+          "guest_room"
+        ],
+        "resolution": "expanded"
+      },
+      "boiler_room": {
+        "ui_room_types": [
+          "boiler_room"
+        ],
+        "resolution": "direct"
+      },
+      "childrens_room": {
+        "ui_room_types": [
+          "childrens_room"
+        ],
+        "resolution": "direct"
+      },
+      "garage": {
+        "ui_room_types": [
+          "garage"
+        ],
+        "resolution": "direct"
+      },
+      "hallway": {
+        "ui_room_types": [
+          "hallway"
+        ],
+        "resolution": "direct"
+      },
+      "home_office": {
+        "ui_room_types": [
+          "office"
+        ],
+        "resolution": "direct"
+      },
+      "home_cinema_room": {
+        "ui_room_types": [
+          "cinema_room",
+          "living_room",
+          "kitchen_living_room"
+        ],
+        "resolution": "expanded"
+      },
+      "audio_zone": {
+        "ui_room_types": [
+          "living_room",
+          "kitchen",
+          "kitchen_living_room",
+          "dining_room",
+          "bedroom",
+          "guest_room",
+          "childrens_room",
+          "bathroom",
+          "office",
+          "gym",
+          "cinema_room",
+          "sauna",
+          "terrace"
+        ],
+        "resolution": "expanded"
+      },
+      "media_scene_room": {
+        "ui_room_types": [
+          "cinema_room",
+          "living_room",
+          "kitchen_living_room",
+          "bedroom",
+          "guest_room"
+        ],
+        "resolution": "expanded"
+      },
+      "kitchen": {
+        "ui_room_types": [
+          "kitchen",
+          "kitchen_living_room"
+        ],
+        "resolution": "expanded"
+      },
+      "laundry_room": {
+        "ui_room_types": [
+          "laundry"
+        ],
+        "resolution": "direct"
+      },
+      "living_room": {
+        "ui_room_types": [
+          "living_room",
+          "kitchen_living_room",
+          "dining_room"
+        ],
+        "resolution": "expanded"
+      },
+      "living_room_only": {
+        "ui_room_types": [
+          "living_room"
+        ],
+        "resolution": "direct"
+      },
+      "media_room": {
+        "ui_room_types": [
+          "cinema_room"
+        ],
+        "resolution": "direct"
+      },
+      "other": {
+        "ui_room_types": [
+          "other"
+        ],
+        "resolution": "direct"
+      },
+      "stairway": {
+        "ui_room_types": [
+          "staircase"
+        ],
+        "resolution": "direct"
+      },
+      "toilet": {
+        "ui_room_types": [
+          "wc"
+        ],
+        "resolution": "direct"
+      },
+      "utility_room": {
+        "ui_room_types": [
+          "utility_room",
+          "technical_room",
+          "pantry",
+          "storage_room"
+        ],
+        "resolution": "expanded"
+      },
+      "wardrobe": {
+        "ui_room_types": [
+          "wardrobe"
+        ],
+        "resolution": "direct"
+      }
+    },
+    "location_types": {
+      "balcony": {
+        "ui_room_types": [
+          "balcony",
+          "loggia"
+        ],
+        "resolution": "expanded"
+      },
+      "co_risk_point": {
+        "ui_room_types": [
+          "kitchen",
+          "kitchen_living_room",
+          "living_room",
+          "boiler_room",
+          "utility_room",
+          "technical_room",
+          "garage"
+        ],
+        "resolution": "expanded"
+      },
+      "downspout": {
+        "ui_room_types": [
+          "gutter"
+        ],
+        "resolution": "expanded"
+      },
+      "driveway": {
+        "ui_room_types": [
+          "driveway"
+        ],
+        "resolution": "direct"
+      },
+      "electrical_input": {
+        "ui_room_types": [
+          "electrical_panel"
+        ],
+        "resolution": "expanded",
+        "target_role": "infrastructure_anchor"
+      },
+      "electrical_panel": {
+        "ui_room_types": [
+          "electrical_panel"
+        ],
+        "resolution": "direct",
+        "target_role": "infrastructure_anchor"
+      },
+      "entrance": {
+        "ui_room_types": [
+          "entrance"
+        ],
+        "resolution": "direct"
+      },
+      "equipment_room": {
+        "ui_room_types": [
+          "technical_room",
+          "boiler_room",
+          "utility_room",
+          "garage"
+        ],
+        "resolution": "expanded",
+        "target_role": "infrastructure_anchor"
+      },
+      "facade": {
+        "ui_room_types": [],
+        "resolution": "virtual",
+        "target_role": "device_endpoint"
+      },
+      "floor": {
+        "ui_room_types": [],
+        "resolution": "virtual",
+        "target_role": "device_endpoint"
+      },
+      "garden": {
+        "ui_room_types": [
+          "garden"
+        ],
+        "resolution": "direct"
+      },
+      "gas_risk_point": {
+        "ui_room_types": [
+          "kitchen",
+          "kitchen_living_room",
+          "boiler_room",
+          "utility_room",
+          "technical_room"
+        ],
+        "resolution": "expanded"
+      },
+      "generator_area": {
+        "ui_room_types": [
+          "garage",
+          "utility_room",
+          "technical_room"
+        ],
+        "resolution": "expanded",
+        "target_role": "infrastructure_anchor"
+      },
+      "greenhouse": {
+        "ui_room_types": [],
+        "resolution": "virtual",
+        "target_role": "device_endpoint"
+      },
+      "gutter": {
+        "ui_room_types": [
+          "gutter"
+        ],
+        "resolution": "direct"
+      },
+      "indoor_room": {
+        "ui_room_types": [
+          "living_room",
+          "kitchen",
+          "kitchen_living_room",
+          "bedroom",
+          "guest_room",
+          "childrens_room",
+          "dining_room",
+          "bathroom",
+          "wc",
+          "hallway",
+          "office",
+          "wardrobe",
+          "utility_room",
+          "laundry",
+          "pantry",
+          "storage_room",
+          "boiler_room",
+          "technical_room",
+          "garage",
+          "terrace",
+          "balcony",
+          "loggia",
+          "staircase",
+          "attic",
+          "basement",
+          "workshop",
+          "gym",
+          "cinema_room",
+          "sauna",
+          "pool_room",
+          "other"
+        ],
+        "resolution": "expanded"
+      },
+      "irrigation_area": {
+        "ui_room_types": [
+          "plot",
+          "garden",
+          "lawn"
+        ],
+        "resolution": "expanded"
+      },
+      "manifold_location": {
+        "ui_room_types": [
+          "boiler_room",
+          "utility_room",
+          "technical_room",
+          "water_entry"
+        ],
+        "resolution": "expanded",
+        "target_role": "infrastructure_anchor"
+      },
+      "network_rack": {
+        "ui_room_types": [
+          "technical_room",
+          "utility_room",
+          "storage_room"
+        ],
+        "resolution": "expanded",
+        "target_role": "infrastructure_anchor"
+      },
+      "outdoor_stairs": {
+        "ui_room_types": [
+          "entrance",
+          "plot"
+        ],
+        "resolution": "expanded"
+      },
+      "path": {
+        "ui_room_types": [
+          "plot",
+          "garden",
+          "lawn"
+        ],
+        "resolution": "expanded"
+      },
+      "plot_perimeter": {
+        "ui_room_types": [
+          "perimeter"
+        ],
+        "resolution": "direct"
+      },
+      "pool": {
+        "ui_room_types": [
+          "pool_room"
+        ],
+        "resolution": "direct"
+      },
+      "pool_plant_room": {
+        "ui_room_types": [
+          "pool_room",
+          "technical_room",
+          "utility_room"
+        ],
+        "resolution": "expanded",
+        "target_role": "infrastructure_anchor"
+      },
+      "private_gate": {
+        "ui_room_types": [
+          "gate",
+          "wicket"
+        ],
+        "resolution": "expanded"
+      },
+      "roof": {
+        "ui_room_types": [
+          "roof"
+        ],
+        "resolution": "direct"
+      },
+      "security_partition": {
+        "ui_room_types": [],
+        "resolution": "virtual",
+        "target_role": "aggregate_scope"
+      },
+      "septic_equipment": {
+        "ui_room_types": [
+          "septic",
+          "technical_room"
+        ],
+        "resolution": "expanded",
+        "target_role": "infrastructure_anchor"
+      },
+      "septic_tank": {
+        "ui_room_types": [
+          "septic"
+        ],
+        "resolution": "direct"
+      },
+      "terrace": {
+        "ui_room_types": [
+          "terrace"
+        ],
+        "resolution": "direct"
+      },
+      "water_entry": {
+        "ui_room_types": [
+          "water_entry"
+        ],
+        "resolution": "direct",
+        "target_role": "infrastructure_anchor"
+      },
+      "water_risk_point": {
+        "ui_room_types": [
+          "bathroom",
+          "wc",
+          "kitchen",
+          "kitchen_living_room",
+          "laundry",
+          "boiler_room",
+          "utility_room",
+          "technical_room",
+          "water_entry"
+        ],
+        "resolution": "expanded"
+      },
+    "whole_property": {
+      "ui_room_types": [
+        "whole_property"
+      ],
+      "resolution": "direct",
+      "target_role": "aggregate_scope"
+      },
+      "window": {
+        "ui_room_types": [],
+        "resolution": "virtual",
+        "target_role": "device_endpoint"
+      },
+      "yard": {
+        "ui_room_types": [
+          "plot",
+          "garden",
+          "lawn",
+          "outdoor_parking"
+        ],
+        "resolution": "expanded"
+      }
+    },
+    "virtual_location_note": "virtual aliases have no RoomType enum equivalent and require a derived project-level location in a later UI iteration; they must not be silently mapped to an unrelated room."
+  },
+  "fallback_rule": {
+    "applicability": {
+      "false_result": {
+        "status": "not_applicable",
+        "recommended_phase": null,
+        "needs_review": false
+      },
+      "unknown_result": {
+        "status": "inherit_system_status",
+        "needs_review": true
+      },
+      "true_result": "evaluate_relevance"
+    },
+    "relevance": {
+      "match_status_map": {
+        "recommended": "recommended",
+        "optional": "recommended",
+        "inexpedient": "optional"
+      },
+      "no_match_status_map": {
+        "recommended": "optional",
+        "optional": "optional",
+        "inexpedient": "inexpedient"
+      },
+      "unknown_result": {
+        "status": "inherit_system_status",
+        "needs_review": true
+      },
+      "empty_expression_result": {
+        "status": "inherit_system_status",
+        "needs_review": false
+      }
+    },
+    "reason_codes": {
+      "applicability_false": "FUNCTION_NOT_APPLICABLE",
+      "applicability_unknown": "FUNCTION_APPLICABILITY_NEEDS_REVIEW",
+      "relevance_match": "FUNCTION_RELEVANCE_MATCH",
+      "relevance_no_match": "FUNCTION_RELEVANCE_NOT_CONFIRMED",
+      "relevance_unknown": "FUNCTION_RELEVANCE_NEEDS_REVIEW",
+      "fallback_inherited": "FUNCTION_INHERITED_SYSTEM_STATUS"
+    }
+  },
+  "phase_rules": {
+    "version": "function_phase_v1",
+    "phase_order": [
+      "first",
+      "second",
+      "later"
+    ],
+    "candidate_policy": "earliest_phase_wins",
+    "promotions_accumulate": false,
+    "steps": [
+      {
+        "order": 10,
+        "rule_id": "PHASE_NOT_APPLICABLE",
+        "when": {
+          "source": "function",
+          "field": "status",
+          "operator": "equals",
+          "value": "not_applicable"
+        },
+        "result": null,
+        "terminal": true
+      },
+      {
+        "order": 20,
+        "rule_id": "PHASE_INITIALIZE_DEFAULT",
+        "result_from": "functions_catalog.default_phase_priority"
+      },
+      {
+        "order": 30,
+        "rule_id": "PHASE_INEXPEDIENT_LATER",
+        "when": {
+          "source": "function",
+          "field": "status",
+          "operator": "equals",
+          "value": "inexpedient"
+        },
+        "result": "later",
+        "terminal": true
+      },
+      {
+        "order": 40,
+        "rule_id": "PHASE_SAFETY_FIRST",
+        "all": [
+          {
+            "source": "function",
+            "field": "status",
+            "operator": "in",
+            "value": [
+              "recommended",
+              "optional"
+            ]
+          },
+          {
+            "source": "factors",
+            "field": "safety_criticality",
+            "operator": "equals",
+            "value": 2
+          }
+        ],
+        "candidate": "first"
+      },
+      {
+        "order": 50,
+        "rule_id": "PHASE_DAILY_PROMOTE_ONE",
+        "all": [
+          {
+            "source": "function",
+            "field": "status",
+            "operator": "equals",
+            "value": "recommended"
+          },
+          {
+            "source": "factors",
+            "field": "daily_impact",
+            "operator": "equals",
+            "value": 2
+          }
+        ],
+        "candidate_operation": "promote_default_one_step"
+      },
+      {
+        "order": 60,
+        "rule_id": "PHASE_RETROFIT_PROMOTE_ONE",
+        "all": [
+          {
+            "source": "factors",
+            "field": "retrofit_penalty",
+            "operator": "equals",
+            "value": 2
+          },
+          {
+            "source": "questionnaire",
+            "field": "project_stage",
+            "operator": "in",
+            "value": [
+              "planning",
+              "renovation",
+              "reconstruction"
+            ]
+          }
+        ],
+        "candidate_operation": "promote_default_one_step"
+      },
+      {
+        "order": 70,
+        "rule_id": "PHASE_PREREQUISITE_NORMALIZATION",
+        "operation": "set_each_prerequisite_no_later_than_dependent",
+        "graph_source": "functions_catalog.prerequisite_function_ids"
+      }
+    ],
+    "user_choice_policy": "recommended_phase is immutable; a user-selected phase is stored separately, then prerequisite normalization is applied visibly to selected choices"
+  },
+  "functions": {
+    "climate.underfloor_heating_control": {
+      "factors": {
+        "safety_criticality": 0,
+        "retrofit_penalty": 2,
+        "dependency_role": 2,
+        "daily_impact": 2
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "heating_systems",
+            "operator": "contains",
+            "value": "underfloor_heating"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "zoned_temperature",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "comfort_priority",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "climate.radiator_zone_control": {
+      "factors": {
+        "safety_criticality": 0,
+        "retrofit_penalty": 1,
+        "dependency_role": 1,
+        "daily_impact": 2
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "heating_systems",
+            "operator": "contains",
+            "value": "radiators"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "zoned_temperature",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "occupancy_based_climate",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "climate.cooling_zone_control": {
+      "factors": {
+        "safety_criticality": 0,
+        "retrofit_penalty": 1,
+        "dependency_role": 1,
+        "daily_impact": 2
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "cooling_systems",
+            "operator": "not_contains",
+            "value": "none"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "comfort_priority",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "precondition_home",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "climate.boiler_monitoring": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 1,
+        "dependency_role": 1,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "any": [
+              {
+                "source": "questionnaire",
+                "field": "boiler_room_present",
+                "operator": "equals",
+                "value": true
+              },
+              {
+                "source": "questionnaire",
+                "field": "heating_systems",
+                "operator": "contains",
+                "value": "boiler"
+              }
+            ]
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "remote_control_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "safety_priority",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "ventilation.exhaust_fan_control": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 1,
+        "dependency_role": 2,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "ventilation_equipment",
+            "operator": "contains",
+            "value": "exhaust"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "air_quality_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "automation_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "ventilation.humidity_control": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 1,
+        "dependency_role": 1,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "air_quality_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "comfort_priority",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "ventilation.co2_monitoring": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 1,
+        "dependency_role": 1,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "air_quality_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "vulnerable_residents",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      }
+    },
+    "ventilation.central_unit_control": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 2,
+        "dependency_role": 2,
+        "daily_impact": 2
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "any": [
+              {
+                "source": "questionnaire",
+                "field": "ventilation_equipment",
+                "operator": "contains",
+                "value": "supply_exhaust"
+              },
+              {
+                "source": "questionnaire",
+                "field": "ventilation_equipment",
+                "operator": "contains",
+                "value": "heat_recovery"
+              }
+            ]
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "air_quality_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "energy_priority",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "ventilation.air_quality_notifications": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 0,
+        "dependency_role": 0,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "air_quality_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "remote_control_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "lighting.switched_group_control": {
+      "factors": {
+        "safety_criticality": 0,
+        "retrofit_penalty": 2,
+        "dependency_role": 2,
+        "daily_impact": 2
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "lighting_group_count",
+            "operator": "in",
+            "value": [
+              "four_to_eight",
+              "nine_or_more"
+            ]
+          },
+          {
+            "source": "questionnaire",
+            "field": "automation_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "lighting.dimmable_group_control": {
+      "factors": {
+        "safety_criticality": 0,
+        "retrofit_penalty": 2,
+        "dependency_role": 1,
+        "daily_impact": 2
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "dimming_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "lighting.scenes": {
+      "factors": {
+        "safety_criticality": 0,
+        "retrofit_penalty": 0,
+        "dependency_role": 0,
+        "daily_impact": 2
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "lighting_scenes_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "automation_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "lighting.presence_control": {
+      "factors": {
+        "safety_criticality": 0,
+        "retrofit_penalty": 1,
+        "dependency_role": 1,
+        "daily_impact": 2
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "presence_lighting_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "lighting.master_off": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 0,
+        "dependency_role": 0,
+        "daily_impact": 2
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "automation_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "remote_control_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "shading.motorized_opening_control": {
+      "factors": {
+        "safety_criticality": 0,
+        "retrofit_penalty": 2,
+        "dependency_role": 2,
+        "daily_impact": 2
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "motorized_shading_present",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "shading_automation_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "shading.scenes": {
+      "factors": {
+        "safety_criticality": 0,
+        "retrofit_penalty": 0,
+        "dependency_role": 0,
+        "daily_impact": 2
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "motorized_shading_present",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "shading_automation_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "automation_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "shading.sun_protection": {
+      "factors": {
+        "safety_criticality": 0,
+        "retrofit_penalty": 1,
+        "dependency_role": 1,
+        "daily_impact": 2
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "motorized_shading_present",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "sun_overheating_problem",
+            "operator": "equals",
+            "value": true
+          },
+          {
+            "source": "questionnaire",
+            "field": "weather_automation_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "shading.weather_protection": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 1,
+        "dependency_role": 1,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "motorized_shading_present",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "weather_sensitive_elements",
+            "operator": "equals",
+            "value": true
+          },
+          {
+            "source": "questionnaire",
+            "field": "weather_automation_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "intrusion.motion_detection": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 1,
+        "dependency_role": 2,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "intrusion_priority",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "safety_priority",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "previous_intrusion",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      }
+    },
+    "intrusion.opening_detection": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 2,
+        "dependency_role": 2,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "opening_monitoring_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "exposed_access_points",
+            "operator": "equals",
+            "value": true
+          },
+          {
+            "source": "questionnaire",
+            "field": "previous_intrusion",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      }
+    },
+    "intrusion.arming_modes": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 1,
+        "dependency_role": 2,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "absence_frequency",
+            "operator": "in",
+            "value": [
+              "often",
+              "extended"
+            ]
+          },
+          {
+            "source": "questionnaire",
+            "field": "intrusion_priority",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "intrusion.local_siren": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 1,
+        "dependency_role": 1,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "equals",
+            "value": "recommended"
+          },
+          {
+            "source": "questionnaire",
+            "field": "siren_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "previous_intrusion",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      }
+    },
+    "intrusion.remote_notifications": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 0,
+        "dependency_role": 0,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "absence_frequency",
+            "operator": "in",
+            "value": [
+              "often",
+              "extended"
+            ]
+          },
+          {
+            "source": "questionnaire",
+            "field": "remote_control_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "emergency_notifications_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "video.live_view": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 2,
+        "dependency_role": 2,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "outdoor_camera_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "indoor_camera_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "home_staff_present",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      }
+    },
+    "video.recording": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 1,
+        "dependency_role": 1,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "previous_intrusion",
+            "operator": "equals",
+            "value": true
+          },
+          {
+            "source": "questionnaire",
+            "field": "absence_frequency",
+            "operator": "in",
+            "value": [
+              "often",
+              "extended"
+            ]
+          }
+        ]
+      }
+    },
+    "video.motion_events": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 1,
+        "dependency_role": 1,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "previous_intrusion",
+            "operator": "equals",
+            "value": true
+          },
+          {
+            "source": "questionnaire",
+            "field": "exposed_access_points",
+            "operator": "equals",
+            "value": true
+          },
+          {
+            "source": "questionnaire",
+            "field": "outdoor_camera_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "video.remote_access": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 0,
+        "dependency_role": 0,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "remote_control_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "absence_frequency",
+            "operator": "in",
+            "value": [
+              "often",
+              "extended"
+            ]
+          }
+        ]
+      }
+    },
+    "access.video_intercom": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 2,
+        "dependency_role": 2,
+        "daily_impact": 2
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "visitor_access_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "home_staff_present",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      }
+    },
+    "access.remote_unlock": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 1,
+        "dependency_role": 1,
+        "daily_impact": 2
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "visitor_access_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "remote_control_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "access.keyless_access": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 2,
+        "dependency_role": 1,
+        "daily_impact": 2
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "keyless_access_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "home_staff_present",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      }
+    },
+    "access.tamper_notification": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 1,
+        "dependency_role": 0,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "lock_tamper_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "previous_intrusion",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      }
+    },
+    "perimeter.boundary_detection": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 2,
+        "dependency_role": 2,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "private_plot",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "perimeter_detection_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "previous_intrusion",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      }
+    },
+    "perimeter.approach_detection": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 2,
+        "dependency_role": 1,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "private_plot",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "outdoor_camera_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "intrusion_priority",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "perimeter.zone_alerts": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 1,
+        "dependency_role": 1,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "private_plot",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "perimeter_detection_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "remote_control_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "perimeter.security_integration": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 1,
+        "dependency_role": 0,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "private_plot",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "automation_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "intrusion_priority",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "leak.detection_and_shutoff": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 2,
+        "dependency_role": 2,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "water_zones",
+            "operator": "gte",
+            "value": 1
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "equals",
+            "value": "recommended"
+          },
+          {
+            "source": "questionnaire",
+            "field": "previous_leak",
+            "operator": "equals",
+            "value": true
+          },
+          {
+            "source": "questionnaire",
+            "field": "automatic_shutoff_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "safety_priority",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "leak.remote_notification": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 0,
+        "dependency_role": 0,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "water_zones",
+            "operator": "gte",
+            "value": 1
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "equals",
+            "value": "recommended"
+          },
+          {
+            "source": "questionnaire",
+            "field": "emergency_notifications_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "absence_frequency",
+            "operator": "in",
+            "value": [
+              "often",
+              "extended"
+            ]
+          }
+        ]
+      }
+    },
+    "leak.manual_valve_control": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 1,
+        "dependency_role": 0,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "water_zones",
+            "operator": "gte",
+            "value": 1
+          },
+          {
+            "source": "questionnaire",
+            "field": "water_entry_present",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "remote_control_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "automatic_shutoff_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "fire.smoke_detection": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 2,
+        "dependency_role": 2,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "equals",
+            "value": "recommended"
+          },
+          {
+            "source": "questionnaire",
+            "field": "safety_priority",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "vulnerable_residents",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      }
+    },
+    "fire.heat_detection": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 2,
+        "dependency_role": 2,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "equals",
+            "value": "recommended"
+          },
+          {
+            "source": "questionnaire",
+            "field": "safety_priority",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "boiler_room_present",
+            "operator": "equals",
+            "value": true
+          },
+          {
+            "source": "questionnaire",
+            "field": "gas_co_sources",
+            "operator": "not_contains",
+            "value": "none"
+          }
+        ]
+      }
+    },
+    "fire.local_alarm": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 1,
+        "dependency_role": 1,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "equals",
+            "value": "recommended"
+          }
+        ]
+      }
+    },
+    "fire.remote_notification": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 0,
+        "dependency_role": 0,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "equals",
+            "value": "recommended"
+          }
+        ]
+      }
+    },
+    "gas.gas_detection": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 2,
+        "dependency_role": 2,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "any": [
+              {
+                "source": "questionnaire",
+                "field": "gas_co_sources",
+                "operator": "contains",
+                "value": "gas_stove"
+              },
+              {
+                "source": "questionnaire",
+                "field": "gas_co_sources",
+                "operator": "contains",
+                "value": "gas_boiler"
+              }
+            ]
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "gas_co_sources",
+            "operator": "contains",
+            "value": "gas_stove"
+          },
+          {
+            "source": "questionnaire",
+            "field": "gas_co_sources",
+            "operator": "contains",
+            "value": "gas_boiler"
+          },
+          {
+            "source": "questionnaire",
+            "field": "safety_priority",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "emergency_notifications_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "gas.co_detection": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 2,
+        "dependency_role": 2,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "any": [
+              {
+                "source": "questionnaire",
+                "field": "gas_co_sources",
+                "operator": "contains",
+                "value": "gas_boiler"
+              },
+              {
+                "source": "questionnaire",
+                "field": "gas_co_sources",
+                "operator": "contains",
+                "value": "fireplace"
+              },
+              {
+                "source": "questionnaire",
+                "field": "gas_co_sources",
+                "operator": "contains",
+                "value": "solid_fuel_boiler"
+              },
+              {
+                "source": "questionnaire",
+                "field": "gas_co_sources",
+                "operator": "contains",
+                "value": "generator"
+              },
+              {
+                "source": "questionnaire",
+                "field": "gas_co_sources",
+                "operator": "contains",
+                "value": "other"
+              }
+            ]
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "equals",
+            "value": "recommended"
+          },
+          {
+            "source": "questionnaire",
+            "field": "gas_co_sources",
+            "operator": "contains",
+            "value": "gas_boiler"
+          },
+          {
+            "source": "questionnaire",
+            "field": "gas_co_sources",
+            "operator": "contains",
+            "value": "fireplace"
+          },
+          {
+            "source": "questionnaire",
+            "field": "gas_co_sources",
+            "operator": "contains",
+            "value": "solid_fuel_boiler"
+          },
+          {
+            "source": "questionnaire",
+            "field": "gas_co_sources",
+            "operator": "contains",
+            "value": "generator"
+          },
+          {
+            "source": "questionnaire",
+            "field": "safety_priority",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "vulnerable_residents",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      }
+    },
+    "gas.local_alarm": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 1,
+        "dependency_role": 1,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "gas_co_sources",
+            "operator": "not_contains",
+            "value": "none"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "gas_co_sources",
+            "operator": "not_contains",
+            "value": "none"
+          }
+        ]
+      }
+    },
+    "gas.remote_notification": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 0,
+        "dependency_role": 0,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "gas_co_sources",
+            "operator": "not_contains",
+            "value": "none"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "gas_co_sources",
+            "operator": "not_contains",
+            "value": "none"
+          }
+        ]
+      }
+    },
+    "power.voltage_monitoring": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 1,
+        "dependency_role": 2,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "energy_monitoring_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "outage_frequency",
+            "operator": "not_equals",
+            "value": "never"
+          }
+        ]
+      }
+    },
+    "power.energy_metering": {
+      "factors": {
+        "safety_criticality": 0,
+        "retrofit_penalty": 1,
+        "dependency_role": 1,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "energy_monitoring_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "energy_priority",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "power.load_control": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 2,
+        "dependency_role": 1,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "load_shedding_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "automation_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "power.notifications": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 0,
+        "dependency_role": 0,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "energy_monitoring_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "outage_frequency",
+            "operator": "not_equals",
+            "value": "never"
+          }
+        ]
+      }
+    },
+    "backup.critical_load_supply": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 2,
+        "dependency_role": 2,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "autonomy_priority",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "outage_frequency",
+            "operator": "in",
+            "value": [
+              "monthly",
+              "weekly",
+              "daily"
+            ]
+          },
+          {
+            "source": "questionnaire",
+            "field": "critical_loads",
+            "operator": "not_contains",
+            "value": "none"
+          }
+        ]
+      }
+    },
+    "backup.automatic_transfer": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 2,
+        "dependency_role": 1,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "electrical_panel_present",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "autonomy_priority",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "outage_frequency",
+            "operator": "in",
+            "value": [
+              "weekly",
+              "daily"
+            ]
+          }
+        ]
+      }
+    },
+    "backup.source_monitoring": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 1,
+        "dependency_role": 1,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "equals",
+            "value": "recommended"
+          },
+          {
+            "source": "questionnaire",
+            "field": "remote_control_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "autonomy_priority",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "backup.load_shedding": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 2,
+        "dependency_role": 1,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "load_shedding_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "outage_duration",
+            "operator": "in",
+            "value": [
+              "four_to_eight_hours",
+              "over_eight_hours"
+            ]
+          }
+        ]
+      }
+    },
+    "media.home_cinema": {
+      "factors": {
+        "safety_criticality": 0,
+        "retrofit_penalty": 2,
+        "dependency_role": 1,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "home_cinema_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "multimedia_priority",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "media.multiroom_audio": {
+      "factors": {
+        "safety_criticality": 0,
+        "retrofit_penalty": 2,
+        "dependency_role": 1,
+        "daily_impact": 2
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "multiroom_audio_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "multimedia_priority",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "media.media_scenes": {
+      "factors": {
+        "safety_criticality": 0,
+        "retrofit_penalty": 0,
+        "dependency_role": 0,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "home_cinema_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "automation_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "media.centralized_sources": {
+      "factors": {
+        "safety_criticality": 0,
+        "retrofit_penalty": 2,
+        "dependency_role": 2,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "home_cinema_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "multiroom_audio_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "gate.remote_opening": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 2,
+        "dependency_role": 2,
+        "daily_impact": 2
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "gate_garage_present",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "visitor_access_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "remote_control_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "gate.position_status": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 1,
+        "dependency_role": 2,
+        "daily_impact": 2
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "gate_garage_present",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "safety_priority",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "remote_control_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "gate.access_scenarios": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 1,
+        "dependency_role": 0,
+        "daily_impact": 2
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "gate_garage_present",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "automation_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "visitor_access_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "gate.open_too_long_alert": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 0,
+        "dependency_role": 0,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "gate_garage_present",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "safety_priority",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "remote_control_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "irrigation.zone_schedules": {
+      "factors": {
+        "safety_criticality": 0,
+        "retrofit_penalty": 2,
+        "dependency_role": 2,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "irrigation_present",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "automation_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "weather_automation_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "irrigation.weather_adjustment": {
+      "factors": {
+        "safety_criticality": 0,
+        "retrofit_penalty": 1,
+        "dependency_role": 1,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "irrigation_present",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "weather_automation_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "energy_priority",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "irrigation.manual_remote_control": {
+      "factors": {
+        "safety_criticality": 0,
+        "retrofit_penalty": 1,
+        "dependency_role": 0,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "irrigation_present",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "remote_control_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "irrigation.fault_notification": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 0,
+        "dependency_role": 0,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "irrigation_present",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "remote_control_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "automation_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "pool.filtration_schedules": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 2,
+        "dependency_role": 2,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "pool_present",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "automation_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "energy_priority",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "pool.temperature_control": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 2,
+        "dependency_role": 1,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "pool_present",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "comfort_priority",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "remote_control_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "pool.water_parameter_monitoring": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 1,
+        "dependency_role": 1,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "pool_present",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "safety_priority",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "remote_control_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "pool.fault_notification": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 0,
+        "dependency_role": 0,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "pool_present",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "remote_control_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "safety_priority",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "outdoor_heat.gutter_heating": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 2,
+        "dependency_role": 2,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "outdoor_ice_risk",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "weather_automation_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "safety_priority",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "outdoor_heat.walkway_heating": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 2,
+        "dependency_role": 2,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "outdoor_ice_risk",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "safety_priority",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "weather_automation_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "outdoor_heat.driveway_heating": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 2,
+        "dependency_role": 1,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "outdoor_ice_risk",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "safety_priority",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "weather_automation_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "outdoor_heat.automatic_weather_control": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 1,
+        "dependency_role": 1,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "outdoor_ice_risk",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "weather_automation_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "automation_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "septic.level_monitoring": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 1,
+        "dependency_role": 2,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "septic_present",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "safety_priority",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "remote_control_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "septic.fault_detection": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 1,
+        "dependency_role": 2,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "septic_present",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "safety_priority",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "automation_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "septic.service_reminders": {
+      "factors": {
+        "safety_criticality": 1,
+        "retrofit_penalty": 0,
+        "dependency_role": 0,
+        "daily_impact": 0
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "septic_present",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "automation_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    },
+    "septic.remote_notification": {
+      "factors": {
+        "safety_criticality": 2,
+        "retrofit_penalty": 0,
+        "dependency_role": 0,
+        "daily_impact": 1
+      },
+      "applicability": {
+        "all": [
+          {
+            "source": "system_recommendation",
+            "field": "status",
+            "operator": "not_equals",
+            "value": "not_applicable"
+          },
+          {
+            "source": "questionnaire",
+            "field": "septic_present",
+            "operator": "equals",
+            "value": true
+          }
+        ]
+      },
+      "relevance": {
+        "any": [
+          {
+            "source": "questionnaire",
+            "field": "remote_control_interest",
+            "operator": "gte",
+            "value": 4
+          },
+          {
+            "source": "questionnaire",
+            "field": "emergency_notifications_interest",
+            "operator": "gte",
+            "value": 4
+          }
+        ]
+      }
+    }
+  }
+}

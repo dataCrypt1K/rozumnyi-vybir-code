@@ -1,0 +1,16 @@
+{
+  "schema_version": "0.1",
+  "provider": "openai",
+  "endpoint": "https://api.openai.com/v1/responses",
+  "model": "gpt-4o-mini",
+  "plan_model": "gpt-4o",
+  "timeout_seconds": 120,
+  "max_attempts": 2,
+  "max_output_tokens": 6000,
+  "temperature": 0,
+  "retry_delay_seconds": 0.5,
+  "store": false,
+  "hybrid_alpha": 0.65,
+  "review_difference": 25,
+  "preserve_rule_status": true
+}

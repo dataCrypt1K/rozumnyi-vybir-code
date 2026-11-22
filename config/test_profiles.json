@@ -1,0 +1,170 @@
+{
+  "schema_version": "0.1",
+  "profiles": [
+    {
+      "profile_id": "apartment_frequent_travel_previous_leak",
+      "description": "Квартира, часті відрядження, попереднє протікання, помірний інтерес до автоматизації.",
+      "answers": {
+        "property_type": "apartment",
+        "project_stage": "renovation",
+        "absence_frequency": "extended",
+        "comfort_priority": 4,
+        "energy_priority": 4,
+        "safety_priority": 5,
+        "remote_control_interest": 4,
+        "automation_interest": 3,
+        "heating_systems": ["underfloor_heating", "radiators"],
+        "cooling_systems": ["air_conditioners"],
+        "precondition_home": 4,
+        "zoned_temperature": 4,
+        "occupancy_based_climate": 4,
+        "lighting_group_count": "four_to_eight",
+        "dimming_interest": 3,
+        "color_temperature_interest": 2,
+        "rgb_interest": 1,
+        "presence_lighting_interest": 3,
+        "lighting_scenes_interest": 3,
+        "water_zones": 3,
+        "previous_leak": true,
+        "automatic_shutoff_interest": 5
+      },
+      "expected_statuses": {
+        "climate_control": "recommended",
+        "smart_lighting": "optional",
+        "leak_protection": "recommended"
+      }
+    },
+    {
+      "profile_id": "house_high_comfort_automation",
+      "description": "Приватний будинок із багатьма зонами, високий інтерес до комфорту та сценаріїв.",
+      "answers": {
+        "property_type": "house",
+        "project_stage": "planning",
+        "absence_frequency": "often",
+        "comfort_priority": 5,
+        "energy_priority": 5,
+        "safety_priority": 4,
+        "remote_control_interest": 5,
+        "automation_interest": 5,
+        "heating_systems": ["underfloor_heating", "radiators", "boiler"],
+        "cooling_systems": ["fan_coils"],
+        "precondition_home": 5,
+        "zoned_temperature": 5,
+        "occupancy_based_climate": 5,
+        "lighting_group_count": "nine_or_more",
+        "dimming_interest": 5,
+        "color_temperature_interest": 4,
+        "rgb_interest": 3,
+        "presence_lighting_interest": 5,
+        "lighting_scenes_interest": 5,
+        "water_zones": 4,
+        "previous_leak": false,
+        "automatic_shutoff_interest": 4
+      },
+      "expected_statuses": {
+        "climate_control": "recommended",
+        "smart_lighting": "recommended",
+        "leak_protection": "recommended"
+      }
+    },
+    {
+      "profile_id": "apartment_low_automation",
+      "description": "Невелика квартира, мешканець майже завжди вдома і не зацікавлений у сценаріях.",
+      "answers": {
+        "property_type": "apartment",
+        "project_stage": "completed",
+        "absence_frequency": "almost_never",
+        "comfort_priority": 2,
+        "energy_priority": 2,
+        "safety_priority": 2,
+        "remote_control_interest": 1,
+        "automation_interest": 1,
+        "heating_systems": ["radiators"],
+        "cooling_systems": ["none"],
+        "precondition_home": 1,
+        "zoned_temperature": 1,
+        "occupancy_based_climate": 1,
+        "lighting_group_count": "one_to_three",
+        "dimming_interest": 1,
+        "color_temperature_interest": 1,
+        "rgb_interest": 1,
+        "presence_lighting_interest": 1,
+        "lighting_scenes_interest": 1,
+        "water_zones": 1,
+        "previous_leak": false,
+        "automatic_shutoff_interest": 1
+      },
+      "expected_statuses": {
+        "climate_control": "optional",
+        "smart_lighting": "inexpedient",
+        "leak_protection": "optional"
+      }
+    },
+    {
+      "profile_id": "house_no_controllable_climate",
+      "description": "Профіль без наявного або запланованого обладнання клімату.",
+      "answers": {
+        "property_type": "house",
+        "project_stage": "completed",
+        "absence_frequency": "rarely",
+        "comfort_priority": 3,
+        "energy_priority": 3,
+        "safety_priority": 3,
+        "remote_control_interest": 3,
+        "automation_interest": 3,
+        "heating_systems": ["none"],
+        "cooling_systems": ["none"],
+        "precondition_home": 3,
+        "zoned_temperature": 3,
+        "occupancy_based_climate": 3,
+        "lighting_group_count": "four_to_eight",
+        "dimming_interest": 3,
+        "color_temperature_interest": 3,
+        "rgb_interest": 2,
+        "presence_lighting_interest": 3,
+        "lighting_scenes_interest": 3,
+        "water_zones": 2,
+        "previous_leak": false,
+        "automatic_shutoff_interest": 3
+      },
+      "expected_statuses": {
+        "climate_control": "not_applicable",
+        "smart_lighting": "optional",
+        "leak_protection": "optional"
+      }
+    },
+    {
+      "profile_id": "technical_profile_without_water",
+      "description": "Технічний контроль жорсткого правила для об'єкта без водних зон.",
+      "answers": {
+        "property_type": "house",
+        "project_stage": "planning",
+        "absence_frequency": "often",
+        "comfort_priority": 4,
+        "energy_priority": 4,
+        "safety_priority": 5,
+        "remote_control_interest": 4,
+        "automation_interest": 4,
+        "heating_systems": ["underfloor_heating"],
+        "cooling_systems": ["none"],
+        "precondition_home": 4,
+        "zoned_temperature": 4,
+        "occupancy_based_climate": 4,
+        "lighting_group_count": "four_to_eight",
+        "dimming_interest": 4,
+        "color_temperature_interest": 3,
+        "rgb_interest": 2,
+        "presence_lighting_interest": 4,
+        "lighting_scenes_interest": 4,
+        "water_zones": 0,
+        "previous_leak": false,
+        "automatic_shutoff_interest": 5
+      },
+      "expected_statuses": {
+        "climate_control": "recommended",
+        "smart_lighting": "recommended",
+        "leak_protection": "not_applicable"
+      }
+    }
+  ]
+}

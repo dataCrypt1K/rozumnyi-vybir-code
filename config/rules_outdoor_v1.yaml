@@ -1,0 +1,84 @@
+{
+  "schema_version": "0.1",
+  "review_status": "draft_for_expert_review",
+  "base_score": 50,
+  "status_thresholds": {"recommended": 70, "optional": 40},
+  "systems": {
+    "gate_garage_control": {
+      "factor_group_caps": {"equipment": 15, "access": 25, "control": 20, "automation": 10},
+      "hard_rules": [
+        {"rule_id": "GATE_APARTMENT", "all": [{"question_id": "property_type", "operator": "equals", "value": "apartment"}], "result": "not_applicable", "reason": "Керування приватними воротами або гаражем не застосовується для квартири."},
+        {"rule_id": "GATE_NO_EQUIPMENT", "all": [{"question_id": "property_type", "operator": "equals", "value": "house"}, {"question_id": "gate_garage_present", "operator": "equals", "value": false}], "result": "not_applicable", "reason": "Не зазначено моторизованих або запланованих воріт, хвіртки чи гаражних воріт."}
+      ],
+      "score_rules": [
+        {"rule_id": "GATE_EQUIPMENT_PRESENT", "question_id": "gate_garage_present", "operator": "equals", "value": true, "points": 15, "factor_group": "equipment", "reason": "Є моторизовані ворота або гараж, які можна інтегрувати."},
+        {"rule_id": "GATE_VISITOR_HIGH", "question_id": "visitor_access_interest", "operator": "gte", "value": 4, "points": 20, "factor_group": "access", "reason": "Потрібне дистанційне відкриття доступу для відвідувачів."},
+        {"rule_id": "GATE_REMOTE_HIGH", "question_id": "remote_control_interest", "operator": "gte", "value": 4, "points": 10, "factor_group": "control", "reason": "Важливе дистанційне керування воротами або гаражем."},
+        {"rule_id": "GATE_KEYLESS_HIGH", "question_id": "keyless_access_interest", "operator": "gte", "value": 4, "points": 5, "factor_group": "access", "reason": "Потрібен доступ без звичайного ключа чи окремого пульта."},
+        {"rule_id": "GATE_AUTOMATION_HIGH", "question_id": "automation_interest", "operator": "gte", "value": 4, "points": 10, "factor_group": "automation", "reason": "Користувачу потрібні автоматичні сценарії приїзду та виїзду."},
+        {"rule_id": "GATE_LOW_NEED", "all": [{"question_id": "visitor_access_interest", "operator": "lte", "value": 2}, {"question_id": "remote_control_interest", "operator": "lte", "value": 2}, {"question_id": "automation_interest", "operator": "lte", "value": 2}], "points": -20, "factor_group": "control", "reason": "Дистанційне, гостьове та автоматичне керування не потрібні."}
+      ]
+    },
+    "irrigation_control": {
+      "factor_group_caps": {"equipment": 15, "weather": 20, "control": 20, "lifestyle": 10},
+      "hard_rules": [
+        {"rule_id": "IRRIGATION_APARTMENT", "all": [{"question_id": "property_type", "operator": "equals", "value": "apartment"}], "result": "not_applicable", "reason": "Автоматичний полив приватної ділянки не застосовується для квартири."},
+        {"rule_id": "IRRIGATION_NO_PLOT", "all": [{"question_id": "property_type", "operator": "equals", "value": "house"}, {"question_id": "private_plot", "operator": "equals", "value": false}], "result": "not_applicable", "reason": "Не зазначено приватної ділянки."},
+        {"rule_id": "IRRIGATION_NO_SYSTEM", "all": [{"question_id": "property_type", "operator": "equals", "value": "house"}, {"question_id": "irrigation_present", "operator": "equals", "value": false}], "result": "not_applicable", "reason": "Не зазначено наявної або запланованої системи поливу."}
+      ],
+      "score_rules": [
+        {"rule_id": "IRRIGATION_PRESENT", "question_id": "irrigation_present", "operator": "equals", "value": true, "points": 15, "factor_group": "equipment", "reason": "Є або планується система поливу."},
+        {"rule_id": "IRRIGATION_WEATHER_HIGH", "question_id": "weather_automation_interest", "operator": "gte", "value": 4, "points": 20, "factor_group": "weather", "reason": "Потрібне погодозалежне коригування поливу."},
+        {"rule_id": "IRRIGATION_AUTOMATION_HIGH", "question_id": "automation_interest", "operator": "gte", "value": 4, "points": 10, "factor_group": "control", "reason": "Користувачу потрібна автоматична робота без ручних команд."},
+        {"rule_id": "IRRIGATION_REMOTE_HIGH", "question_id": "remote_control_interest", "operator": "gte", "value": 4, "points": 10, "factor_group": "control", "reason": "Потрібне дистанційне керування зонами поливу."},
+        {"rule_id": "IRRIGATION_ABSENCE_OFTEN", "question_id": "absence_frequency", "operator": "in", "value": ["often", "extended"], "points": 10, "factor_group": "lifestyle", "reason": "Ділянка часто залишається без нагляду."},
+        {"rule_id": "IRRIGATION_LOW_NEED", "all": [{"question_id": "weather_automation_interest", "operator": "lte", "value": 2}, {"question_id": "automation_interest", "operator": "lte", "value": 2}, {"question_id": "remote_control_interest", "operator": "lte", "value": 2}], "points": -20, "factor_group": "control", "reason": "Автоматичне, погодозалежне й дистанційне керування поливом не потрібні."}
+      ]
+    },
+    "pool_control": {
+      "factor_group_caps": {"equipment": 15, "comfort": 20, "automation": 20, "lifestyle": 10},
+      "hard_rules": [
+        {"rule_id": "POOL_APARTMENT", "all": [{"question_id": "property_type", "operator": "equals", "value": "apartment"}], "result": "not_applicable", "reason": "Керування приватним басейном не застосовується для квартири."},
+        {"rule_id": "POOL_NOT_PRESENT", "all": [{"question_id": "property_type", "operator": "equals", "value": "house"}, {"question_id": "pool_present", "operator": "equals", "value": false}], "result": "not_applicable", "reason": "Не зазначено наявного або запланованого басейну."}
+      ],
+      "score_rules": [
+        {"rule_id": "POOL_PRESENT", "question_id": "pool_present", "operator": "equals", "value": true, "points": 15, "factor_group": "equipment", "reason": "Є або планується приватний басейн."},
+        {"rule_id": "POOL_COMFORT_HIGH", "question_id": "comfort_priority", "operator": "gte", "value": 4, "points": 10, "factor_group": "comfort", "reason": "Комфорт користування басейном має високий пріоритет."},
+        {"rule_id": "POOL_AUTOMATION_HIGH", "question_id": "automation_interest", "operator": "gte", "value": 4, "points": 15, "factor_group": "automation", "reason": "Потрібна автоматизація режимів фільтрації, температури та обслуговування."},
+        {"rule_id": "POOL_REMOTE_HIGH", "question_id": "remote_control_interest", "operator": "gte", "value": 4, "points": 10, "factor_group": "automation", "reason": "Потрібен дистанційний контроль басейну."},
+        {"rule_id": "POOL_ABSENCE_OFTEN", "question_id": "absence_frequency", "operator": "in", "value": ["often", "extended"], "points": 10, "factor_group": "lifestyle", "reason": "Об'єкт часто залишається без нагляду."},
+        {"rule_id": "POOL_LOW_NEED", "all": [{"question_id": "automation_interest", "operator": "lte", "value": 2}, {"question_id": "remote_control_interest", "operator": "lte", "value": 2}], "points": -20, "factor_group": "automation", "reason": "Автоматичний і дистанційний контроль басейну не потрібні."}
+      ]
+    },
+    "roof_gutter_heating": {
+      "factor_group_caps": {"risk": 25, "safety": 20, "weather": 15, "property": 5},
+      "hard_rules": [
+        {"rule_id": "ROOF_HEATING_APARTMENT", "all": [{"question_id": "property_type", "operator": "equals", "value": "apartment"}], "result": "not_applicable", "reason": "Підігрів приватних зовнішніх зон не застосовується для квартири."},
+        {"rule_id": "ROOF_HEATING_NO_RISK", "all": [{"question_id": "property_type", "operator": "equals", "value": "house"}, {"question_id": "outdoor_ice_risk", "operator": "equals", "value": false}], "result": "not_applicable", "reason": "Не зазначено зовнішніх зон із проблемою льоду або снігу."}
+      ],
+      "score_rules": [
+        {"rule_id": "ROOF_HEATING_RISK_PRESENT", "question_id": "outdoor_ice_risk", "operator": "equals", "value": true, "points": 20, "factor_group": "risk", "reason": "Є зовнішні зони з реальною проблемою обмерзання."},
+        {"rule_id": "ROOF_HEATING_SAFETY_HIGH", "question_id": "safety_priority", "operator": "gte", "value": 4, "points": 15, "factor_group": "safety", "reason": "Безпека пересування та захист від аварій мають високий пріоритет."},
+        {"rule_id": "ROOF_HEATING_WEATHER_HIGH", "question_id": "weather_automation_interest", "operator": "gte", "value": 4, "points": 10, "factor_group": "weather", "reason": "Потрібне автоматичне погодозалежне вмикання підігріву."},
+        {"rule_id": "ROOF_HEATING_MULTIPLE_FLOORS", "question_id": "floor_count", "operator": "gte", "value": 2, "points": 5, "factor_group": "property", "reason": "Багатоповерховий будинок може мати більшу площу покрівлі та жолобів."},
+        {"rule_id": "ROOF_HEATING_LOW_PRIORITY", "all": [{"question_id": "safety_priority", "operator": "lte", "value": 2}, {"question_id": "weather_automation_interest", "operator": "lte", "value": 2}], "points": -15, "factor_group": "safety", "reason": "Автоматичний підігрів і безпека зовнішніх зон мають низький пріоритет."}
+      ]
+    },
+    "septic_monitoring": {
+      "factor_group_caps": {"equipment": 15, "safety": 20, "control": 20, "lifestyle": 10},
+      "hard_rules": [
+        {"rule_id": "SEPTIC_APARTMENT", "all": [{"question_id": "property_type", "operator": "equals", "value": "apartment"}], "result": "not_applicable", "reason": "Контроль приватного септика не застосовується для квартири."},
+        {"rule_id": "SEPTIC_NOT_PRESENT", "all": [{"question_id": "property_type", "operator": "equals", "value": "house"}, {"question_id": "septic_present", "operator": "equals", "value": false}], "result": "not_applicable", "reason": "Не зазначено автономної каналізації або септика."}
+      ],
+      "score_rules": [
+        {"rule_id": "SEPTIC_PRESENT", "question_id": "septic_present", "operator": "equals", "value": true, "points": 15, "factor_group": "equipment", "reason": "На об'єкті є автономна каналізація або септик."},
+        {"rule_id": "SEPTIC_SAFETY_HIGH", "question_id": "safety_priority", "operator": "gte", "value": 4, "points": 10, "factor_group": "safety", "reason": "Інженерна безпека має високий пріоритет."},
+        {"rule_id": "SEPTIC_ALERTS_HIGH", "question_id": "emergency_notifications_interest", "operator": "gte", "value": 4, "points": 10, "factor_group": "safety", "reason": "Потрібні віддалені аварійні повідомлення."},
+        {"rule_id": "SEPTIC_REMOTE_HIGH", "question_id": "remote_control_interest", "operator": "gte", "value": 4, "points": 10, "factor_group": "control", "reason": "Важливо дистанційно бачити стан системи."},
+        {"rule_id": "SEPTIC_AUTOMATION_HIGH", "question_id": "automation_interest", "operator": "gte", "value": 4, "points": 10, "factor_group": "control", "reason": "Користувачу потрібні автоматичні повідомлення та сервісні нагадування."},
+        {"rule_id": "SEPTIC_ABSENCE_OFTEN", "question_id": "absence_frequency", "operator": "in", "value": ["often", "extended"], "points": 10, "factor_group": "lifestyle", "reason": "Будинок часто залишається без нагляду."},
+        {"rule_id": "SEPTIC_LOW_NEED", "all": [{"question_id": "safety_priority", "operator": "lte", "value": 2}, {"question_id": "remote_control_interest", "operator": "lte", "value": 2}, {"question_id": "emergency_notifications_interest", "operator": "lte", "value": 2}], "points": -20, "factor_group": "control", "reason": "Контроль стану й аварійні повідомлення мають низький пріоритет."}
+      ]
+    }
+  }
+}

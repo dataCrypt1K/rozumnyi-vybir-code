@@ -1,0 +1,1098 @@
+schema_version: "0.1"
+review_status: draft_for_expert_review
+format_note: >-
+  Каталог функцій для рівно 19 систем із systems_catalog_v1.yaml.
+  Числові інженерні параметри не задаються до підтвердження джерелами
+  та експертом.
+functions:
+  - function_id: climate.underfloor_heating_control
+    system_id: climate_control
+    name_uk: Керування теплою підлогою
+    description_uk: Підтримання температури у підтвердженій зоні теплої підлоги; електричний або водяний спосіб реалізації визначають під час проєктування.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [bathroom, toilet, kitchen, hallway, living_room, bedroom, childrens_room, home_office, other]
+    applicable_location_types: []
+    selection_unit: thermal_zone
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: climate.radiator_zone_control
+    system_id: climate_control
+    name_uk: Зональне керування радіаторами
+    description_uk: Підтримання температури в окремому приміщенні за допомогою керованої радіаторної арматури.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [living_room, bedroom, childrens_room, kitchen, home_office, hallway, other]
+    applicable_location_types: []
+    selection_unit: thermal_zone
+    default_phase_priority: second
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: climate.cooling_zone_control
+    system_id: climate_control
+    name_uk: Зональне керування охолодженням
+    description_uk: Керування сумісним кондиціонером, фанкойлом або іншим обладнанням зони.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [living_room, bedroom, childrens_room, kitchen, home_office, other]
+    applicable_location_types: []
+    selection_unit: hvac_zone
+    default_phase_priority: second
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: climate.boiler_monitoring
+    system_id: climate_control
+    name_uk: Моніторинг котла та опалювального обладнання
+    description_uk: Відображення стану і аварій сумісного котла та допоміжного обладнання.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [boiler_room, utility_room]
+    applicable_location_types: [equipment_room]
+    selection_unit: plant_unit
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: ventilation.exhaust_fan_control
+    system_id: ventilation_air_quality
+    name_uk: Керування витяжним вентилятором
+    description_uk: Автоматичне або сценарне керування окремим витяжним вентилятором.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [bathroom, toilet, laundry_room, utility_room, other]
+    applicable_location_types: []
+    selection_unit: fan_unit
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: true
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: ventilation.humidity_control
+    system_id: ventilation_air_quality
+    name_uk: Контроль вологості
+    description_uk: Моніторинг вологості та використання її в автоматизаціях вентиляції.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [bathroom, toilet, laundry_room, kitchen, basement, other]
+    applicable_location_types: []
+    selection_unit: air_quality_zone
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: official
+    final_engineering_required: true
+
+  - function_id: ventilation.co2_monitoring
+    system_id: ventilation_air_quality
+    name_uk: Моніторинг CO2
+    description_uk: Контроль концентрації CO2 в зонах тривалого перебування людей.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [bedroom, childrens_room, living_room, home_office, other]
+    applicable_location_types: []
+    selection_unit: air_quality_zone
+    default_phase_priority: second
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: ventilation.central_unit_control
+    system_id: ventilation_air_quality
+    name_uk: Керування припливно-витяжною установкою
+    description_uk: Керування режимами сумісної центральної вентиляційної установки.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [utility_room, boiler_room, other]
+    applicable_location_types: [equipment_room]
+    selection_unit: ventilation_unit
+    default_phase_priority: second
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: ventilation.air_quality_notifications
+    system_id: ventilation_air_quality
+    name_uk: Сповіщення про якість повітря
+    description_uk: Повідомлення користувача про зафіксоване погіршення параметрів повітря.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: []
+    applicable_location_types: [whole_property]
+    selection_unit: whole_property
+    default_phase_priority: second
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: none
+    final_engineering_required: false
+
+  - function_id: lighting.switched_group_control
+    system_id: smart_lighting
+    name_uk: Релейне керування групою освітлення
+    description_uk: Вмикання і вимикання окремої групи освітлення без димування.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [living_room, bedroom, childrens_room, kitchen, bathroom, toilet, hallway, stairway, wardrobe, home_office, utility_room, garage, other]
+    applicable_location_types: [facade, terrace, yard]
+    selection_unit: lighting_circuit
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: true
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: lighting.dimmable_group_control
+    system_id: smart_lighting
+    name_uk: Димування групи освітлення
+    description_uk: Плавне керування яскравістю сумісної групи світильників.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [living_room, bedroom, childrens_room, kitchen, bathroom, hallway, home_office, media_room, other]
+    applicable_location_types: [facade, terrace]
+    selection_unit: lighting_circuit
+    default_phase_priority: second
+    prerequisite_function_ids: []
+    technical_mvp: true
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: lighting.scenes
+    system_id: smart_lighting
+    name_uk: Світлові сцени
+    description_uk: Узгоджена зміна стану декількох груп освітлення за однією командою.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [living_room, bedroom, childrens_room, kitchen, hallway, home_office, media_room, other]
+    applicable_location_types: [whole_property]
+    selection_unit: room_or_area
+    default_phase_priority: second
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: expert
+    final_engineering_required: false
+
+  - function_id: lighting.presence_control
+    system_id: smart_lighting
+    name_uk: Керування за присутністю
+    description_uk: Автоматичне керування освітленням за даними датчика руху або присутності.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [hallway, stairway, wardrobe, bathroom, toilet, utility_room, garage, other]
+    applicable_location_types: [entrance]
+    selection_unit: detection_zone
+    default_phase_priority: second
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: lighting.master_off
+    system_id: smart_lighting
+    name_uk: Центральне вимкнення освітлення
+    description_uk: Вимкнення визначених груп освітлення всього об'єкта або поверху.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: []
+    applicable_location_types: [whole_property, floor]
+    selection_unit: room_or_area
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: expert
+    final_engineering_required: false
+
+  - function_id: shading.motorized_opening_control
+    system_id: shading_control
+    name_uk: Керування моторизованою шторою або жалюзі
+    description_uk: Відкриття, закриття та, за підтримки приводу, позиціонування окремої штори або жалюзі.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [living_room, bedroom, childrens_room, kitchen, home_office, other]
+    applicable_location_types: [window, facade, terrace]
+    selection_unit: shading_drive
+    default_phase_priority: second
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: shading.scenes
+    system_id: shading_control
+    name_uk: Сценарії штор і жалюзі
+    description_uk: Узгоджене керування декількома приводами за сценарієм користувача.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [living_room, bedroom, childrens_room, kitchen, home_office, other]
+    applicable_location_types: [facade, floor]
+    selection_unit: room_or_area
+    default_phase_priority: second
+    prerequisite_function_ids: [shading.motorized_opening_control]
+    technical_mvp: false
+    evidence_requirement: expert
+    final_engineering_required: false
+
+  - function_id: shading.sun_protection
+    system_id: shading_control
+    name_uk: Автоматичний сонцезахист
+    description_uk: Керування зовнішніми або внутрішніми затінювальними пристроями за умовами освітленості та перегріву.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [living_room, bedroom, childrens_room, kitchen, home_office, other]
+    applicable_location_types: [facade, window]
+    selection_unit: facade_zone
+    default_phase_priority: later
+    prerequisite_function_ids: [shading.motorized_opening_control]
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: shading.weather_protection
+    system_id: shading_control
+    name_uk: Погодний захист зовнішнього сонцезахисту
+    description_uk: Переведення маркіз або зовнішніх жалюзі в безпечний стан за погодними сигналами.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: []
+    applicable_location_types: [facade, terrace]
+    selection_unit: outdoor_shading_unit
+    default_phase_priority: first
+    prerequisite_function_ids: [shading.motorized_opening_control]
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: intrusion.motion_detection
+    system_id: intrusion_alarm
+    name_uk: Виявлення руху
+    description_uk: Виявлення руху в контрольованій внутрішній зоні.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [hallway, living_room, garage, stairway, utility_room, other]
+    applicable_location_types: [entrance]
+    selection_unit: detection_zone
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: intrusion.opening_detection
+    system_id: intrusion_alarm
+    name_uk: Контроль відкриття
+    description_uk: Виявлення відкриття вхідних дверей, доступних вікон або інших контрольованих отворів.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [living_room, bedroom, childrens_room, kitchen, hallway, garage, other]
+    applicable_location_types: [entrance, window, balcony, terrace]
+    selection_unit: opening_point
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: intrusion.arming_modes
+    system_id: intrusion_alarm
+    name_uk: Режими охорони
+    description_uk: Окремі режими повної, нічної або зональної охорони.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: []
+    applicable_location_types: [whole_property, floor, security_partition]
+    selection_unit: security_partition
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: expert
+    final_engineering_required: true
+
+  - function_id: intrusion.local_siren
+    system_id: intrusion_alarm
+    name_uk: Локальне тривожне оповіщення
+    description_uk: Внутрішнє локальне оповіщення; для приватного будинку з підвищеним ризиком зовнішня сирена є умовним розширенням.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: []
+    applicable_location_types: [whole_property]
+    selection_unit: alarm_endpoint
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: intrusion.remote_notifications
+    system_id: intrusion_alarm
+    name_uk: Дистанційні охоронні сповіщення
+    description_uk: Надсилання користувачу повідомлень про події охоронної системи.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: []
+    applicable_location_types: [whole_property]
+    selection_unit: whole_property
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: none
+    final_engineering_required: false
+
+  - function_id: video.live_view
+    system_id: video_surveillance
+    name_uk: Онлайн-перегляд камер
+    description_uk: Перегляд поточного відео з підтверджених точок відеоконтролю.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [garage, other]
+    applicable_location_types: [entrance, private_gate, driveway, yard, facade]
+    selection_unit: camera_point
+    default_phase_priority: second
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: video.recording
+    system_id: video_surveillance
+    name_uk: Архівний запис відео
+    description_uk: Збереження відео з камер на локальному або іншому погодженому сховищі.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: []
+    applicable_location_types: [whole_property, equipment_room, network_rack]
+    selection_unit: video_system
+    default_phase_priority: second
+    prerequisite_function_ids: [video.live_view]
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: video.motion_events
+    system_id: video_surveillance
+    name_uk: Відеоподії руху
+    description_uk: Формування подій за рухом або іншими підтримуваними ознаками в обраній зоні кадру.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [garage, other]
+    applicable_location_types: [entrance, private_gate, driveway, yard, facade]
+    selection_unit: camera_zone
+    default_phase_priority: second
+    prerequisite_function_ids: [video.live_view]
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: video.remote_access
+    system_id: video_surveillance
+    name_uk: Віддалений доступ до відео
+    description_uk: Захищений доступ користувача до відеосистеми поза локальною мережею.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: []
+    applicable_location_types: [whole_property]
+    selection_unit: video_system
+    default_phase_priority: second
+    prerequisite_function_ids: [video.live_view]
+    technical_mvp: false
+    evidence_requirement: official
+    final_engineering_required: true
+
+  - function_id: access.video_intercom
+    system_id: access_control
+    name_uk: Відеодомофон
+    description_uk: Аудіо- та відеозв'язок із відвідувачем біля контрольованого входу.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: []
+    applicable_location_types: [entrance, private_gate]
+    selection_unit: entrance_point
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: access.remote_unlock
+    system_id: access_control
+    name_uk: Дистанційне відкриття входу
+    description_uk: Керування сумісним замком або приводом з підтвердженого інтерфейсу.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: []
+    applicable_location_types: [entrance, private_gate]
+    selection_unit: controlled_entry
+    default_phase_priority: second
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: access.keyless_access
+    system_id: access_control
+    name_uk: Безключовий доступ
+    description_uk: Надання доступу за електронним ідентифікатором без використання звичайного ключа.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: []
+    applicable_location_types: [entrance, private_gate]
+    selection_unit: credential_reader
+    default_phase_priority: second
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: access.tamper_notification
+    system_id: access_control
+    name_uk: Сповіщення про втручання
+    description_uk: Повідомлення про спробу пошкодження або відкриття підтримуваного пристрою доступу.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: []
+    applicable_location_types: [entrance, private_gate]
+    selection_unit: access_device
+    default_phase_priority: second
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: official
+    final_engineering_required: true
+
+  - function_id: perimeter.boundary_detection
+    system_id: perimeter_security
+    name_uk: Виявлення порушення периметра
+    description_uk: Раннє виявлення події на окремому сегменті межі приватної ділянки.
+    applicable_property_types: [house]
+    applicable_room_types: []
+    applicable_location_types: [plot_perimeter]
+    selection_unit: perimeter_segment
+    default_phase_priority: second
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: perimeter.approach_detection
+    system_id: perimeter_security
+    name_uk: Контроль зовнішніх підходів
+    description_uk: Виявлення руху у підтверджених зовнішніх зонах біля будинку.
+    applicable_property_types: [house]
+    applicable_room_types: []
+    applicable_location_types: [yard, driveway, facade, private_gate]
+    selection_unit: outdoor_detection_zone
+    default_phase_priority: second
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: perimeter.zone_alerts
+    system_id: perimeter_security
+    name_uk: Зональні сповіщення периметра
+    description_uk: Формування повідомлення із зазначенням зовнішньої зони, де зафіксовано подію.
+    applicable_property_types: [house]
+    applicable_room_types: []
+    applicable_location_types: [plot_perimeter, yard, driveway, facade, private_gate]
+    selection_unit: perimeter_zone
+    default_phase_priority: second
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: expert
+    final_engineering_required: false
+
+  - function_id: perimeter.security_integration
+    system_id: perimeter_security
+    name_uk: Інтеграція з охоронною сигналізацією
+    description_uk: Передавання периметральних подій до підтримуваної охоронної системи.
+    applicable_property_types: [house]
+    applicable_room_types: []
+    applicable_location_types: [whole_property, plot_perimeter]
+    selection_unit: security_partition
+    default_phase_priority: second
+    prerequisite_function_ids: [perimeter.boundary_detection]
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: leak.detection_and_shutoff
+    system_id: leak_protection
+    name_uk: Виявлення протікання та захисна реакція
+    description_uk: Виявлення води в підтвердженій зоні ризику; автоматичне перекриття додається лише за наявності доступного вводу та сумісного клапана.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [bathroom, toilet, kitchen, laundry_room, boiler_room]
+    applicable_location_types: [water_entry, manifold_location]
+    selection_unit: leak_protection_zone
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: true
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: leak.remote_notification
+    system_id: leak_protection
+    name_uk: Дистанційне сповіщення про протікання
+    description_uk: Повідомлення користувача про виявлення води або зміну стану запірного клапана.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: []
+    applicable_location_types: [whole_property]
+    selection_unit: whole_property
+    default_phase_priority: first
+    prerequisite_function_ids: [leak.detection_and_shutoff]
+    technical_mvp: false
+    evidence_requirement: none
+    final_engineering_required: false
+
+  - function_id: leak.manual_valve_control
+    system_id: leak_protection
+    name_uk: Ручне дистанційне керування водою
+    description_uk: Примусове відкриття або закриття підтримуваного клапана з інтерфейсу користувача.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: []
+    applicable_location_types: [water_entry]
+    selection_unit: water_supply_branch
+    default_phase_priority: second
+    prerequisite_function_ids: [leak.detection_and_shutoff]
+    technical_mvp: false
+    evidence_requirement: expert
+    final_engineering_required: true
+
+  - function_id: fire.smoke_detection
+    system_id: fire_safety
+    name_uk: Виявлення диму
+    description_uk: Виявлення ознак диму сертифікованим датчиком у підтвердженій зоні.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [bedroom, childrens_room, living_room_only, hallway, stairway, home_office]
+    applicable_location_types: []
+    selection_unit: fire_detection_point
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: fire.heat_detection
+    system_id: fire_safety
+    name_uk: Виявлення перегріву
+    description_uk: Виявлення небезпечної температурної події у зоні, де такий тип датчика допустимий.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [kitchen, boiler_room, garage]
+    applicable_location_types: []
+    selection_unit: fire_detection_point
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: fire.local_alarm
+    system_id: fire_safety
+    name_uk: Локальне пожежне оповіщення
+    description_uk: Взаємопов'язане локальне оповіщення людей на всіх рівнях житла про пожежну подію.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: []
+    applicable_location_types: [whole_property]
+    selection_unit: alarm_endpoint
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: fire.remote_notification
+    system_id: fire_safety
+    name_uk: Дистанційне пожежне сповіщення
+    description_uk: Дистанційний канал тієї самої пожежної системи; працює разом із локальним оповіщенням і не оцінюється як його заміна.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: []
+    applicable_location_types: [whole_property]
+    selection_unit: whole_property
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: official
+    final_engineering_required: false
+
+  - function_id: gas.gas_detection
+    system_id: gas_co_detection
+    name_uk: Виявлення витоку газу
+    description_uk: Виявлення підтримуваного типу горючого газу біля підтвердженого джерела ризику.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [kitchen, boiler_room]
+    applicable_location_types: []
+    selection_unit: gas_risk_point
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: gas.co_detection
+    system_id: gas_co_detection
+    name_uk: Виявлення чадного газу
+    description_uk: Виявлення чадного газу на житлових рівнях біля зон сну; додаткові точки біля джерел горіння уточнюються за планом.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [hallway, stairway, living_room_only, boiler_room]
+    applicable_location_types: []
+    selection_unit: co_risk_point
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: gas.local_alarm
+    system_id: gas_co_detection
+    name_uk: Локальне оповіщення про газ або CO
+    description_uk: Взаємопов'язаний локальний сигнал при тривожній події датчика газу або CO для всього житла.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: []
+    applicable_location_types: [whole_property]
+    selection_unit: alarm_endpoint
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: gas.remote_notification
+    system_id: gas_co_detection
+    name_uk: Дистанційне сповіщення про газ або CO
+    description_uk: Дистанційний канал тієї самої системи газу або CO; не замінює локальну тривогу.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: []
+    applicable_location_types: [whole_property]
+    selection_unit: whole_property
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: official
+    final_engineering_required: false
+
+  - function_id: power.voltage_monitoring
+    system_id: power_protection_monitoring
+    name_uk: Моніторинг напруги
+    description_uk: Контроль параметрів електричної мережі на вводі або вибраній лінії.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: []
+    applicable_location_types: [electrical_panel]
+    selection_unit: electrical_input
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: power.energy_metering
+    system_id: power_protection_monitoring
+    name_uk: Облік споживання електроенергії
+    description_uk: Вимірювання споживання на вводі або на окремій групі навантажень.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: []
+    applicable_location_types: [electrical_panel]
+    selection_unit: metering_point
+    default_phase_priority: second
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: power.load_control
+    system_id: power_protection_monitoring
+    name_uk: Кероване відключення навантажень
+    description_uk: Відключення або відновлення живлення підтвердженої групи навантажень.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: []
+    applicable_location_types: [electrical_panel]
+    selection_unit: load_group
+    default_phase_priority: second
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: power.notifications
+    system_id: power_protection_monitoring
+    name_uk: Сповіщення про електроживлення
+    description_uk: Повідомлення про зникнення живлення або аварійний стан за наявності резерву для контролера та зв'язку.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: []
+    applicable_location_types: [whole_property]
+    selection_unit: whole_property
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: none
+    final_engineering_required: false
+
+  - function_id: backup.critical_load_supply
+    system_id: backup_power
+    name_uk: Резервування критичних навантажень
+    description_uk: Живлення заздалегідь визначеної групи від резервного джерела.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: []
+    applicable_location_types: [electrical_panel, whole_property]
+    selection_unit: critical_load_group
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: backup.automatic_transfer
+    system_id: backup_power
+    name_uk: Автоматичне перемикання джерела
+    description_uk: Переведення підтверджених навантажень на резервне джерело за підтримуваною схемою.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: []
+    applicable_location_types: [electrical_panel]
+    selection_unit: transfer_point
+    default_phase_priority: first
+    prerequisite_function_ids: [backup.critical_load_supply]
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: backup.source_monitoring
+    system_id: backup_power
+    name_uk: Моніторинг резервного джерела
+    description_uk: Відображення доступних параметрів акумулятора, інвертора або генератора.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: []
+    applicable_location_types: [whole_property]
+    selection_unit: backup_source
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: official
+    final_engineering_required: true
+
+  - function_id: backup.load_shedding
+    system_id: backup_power
+    name_uk: Пріоритетне відключення навантажень
+    description_uk: Послідовне відключення некритичних груп за заздалегідь погодженим пріоритетом.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: []
+    applicable_location_types: [electrical_panel, whole_property]
+    selection_unit: load_priority_group
+    default_phase_priority: second
+    prerequisite_function_ids: [backup.critical_load_supply]
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: media.home_cinema
+    system_id: multimedia_multiroom
+    name_uk: Домашній кінотеатр
+    description_uk: Узгоджена аудіовізуальна система для окремої житлової або медійної кімнати.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [home_cinema_room]
+    applicable_location_types: []
+    selection_unit: media_room
+    default_phase_priority: later
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: expert
+    final_engineering_required: true
+
+  - function_id: media.multiroom_audio
+    system_id: multimedia_multiroom
+    name_uk: Мультирум-аудіо
+    description_uk: Незалежне або синхронне відтворення аудіо в окремих приміщеннях.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [audio_zone]
+    applicable_location_types: []
+    selection_unit: audio_zone
+    default_phase_priority: later
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: media.media_scenes
+    system_id: multimedia_multiroom
+    name_uk: Медійні сцени
+    description_uk: Запуск погодженої комбінації медійних джерел, аудіозон та сумісних функцій кімнати.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [media_scene_room]
+    applicable_location_types: []
+    selection_unit: media_scene
+    default_phase_priority: later
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: expert
+    final_engineering_required: false
+
+  - function_id: media.centralized_sources
+    system_id: multimedia_multiroom
+    name_uk: Централізовані медійні джерела
+    description_uk: Розміщення підтримуваних джерел і мережевого обладнання в узгодженій технічній зоні.
+    applicable_property_types: [apartment, house]
+    applicable_room_types: [utility_room, media_room]
+    applicable_location_types: [network_rack, equipment_room]
+    selection_unit: media_source
+    default_phase_priority: later
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: gate.remote_opening
+    system_id: gate_garage_control
+    name_uk: Дистанційне відкриття воріт або гаража
+    description_uk: Подання команди на сумісний привід воріт, хвіртки або гаражних воріт.
+    applicable_property_types: [house]
+    applicable_room_types: [garage]
+    applicable_location_types: [private_gate, driveway]
+    selection_unit: controlled_gate
+    default_phase_priority: second
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: gate.position_status
+    system_id: gate_garage_control
+    name_uk: Контроль положення воріт
+    description_uk: Визначення відкритого, закритого або проміжного стану підтримуваного приводу.
+    applicable_property_types: [house]
+    applicable_room_types: [garage]
+    applicable_location_types: [private_gate, driveway]
+    selection_unit: position_point
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: gate.access_scenarios
+    system_id: gate_garage_control
+    name_uk: Сценарії в'їзду та виїзду
+    description_uk: Координація воріт, освітлення та інших підтримуваних функцій за сценарієм.
+    applicable_property_types: [house]
+    applicable_room_types: [garage]
+    applicable_location_types: [private_gate, driveway]
+    selection_unit: access_scenario
+    default_phase_priority: second
+    prerequisite_function_ids: [gate.remote_opening]
+    technical_mvp: false
+    evidence_requirement: expert
+    final_engineering_required: false
+
+  - function_id: gate.open_too_long_alert
+    system_id: gate_garage_control
+    name_uk: Сповіщення про незакриті ворота
+    description_uk: Повідомлення, якщо контрольований привід залишається не в закритому стані.
+    applicable_property_types: [house]
+    applicable_room_types: [garage]
+    applicable_location_types: [private_gate, driveway]
+    selection_unit: controlled_gate
+    default_phase_priority: first
+    prerequisite_function_ids: [gate.position_status]
+    technical_mvp: false
+    evidence_requirement: expert
+    final_engineering_required: false
+
+  - function_id: irrigation.zone_schedules
+    system_id: irrigation_control
+    name_uk: Розклад зон поливу
+    description_uk: Незалежний розклад керування клапанами окремої гідравлічної зони.
+    applicable_property_types: [house]
+    applicable_room_types: []
+    applicable_location_types: [irrigation_area, yard, garden, greenhouse]
+    selection_unit: irrigation_zone
+    default_phase_priority: later
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: irrigation.weather_adjustment
+    system_id: irrigation_control
+    name_uk: Коригування поливу за погодою
+    description_uk: Зміна запланованого поливу за даними підтримуваного погодного або локального датчика.
+    applicable_property_types: [house]
+    applicable_room_types: []
+    applicable_location_types: [irrigation_area, yard, garden, greenhouse]
+    selection_unit: outdoor_sensor_zone
+    default_phase_priority: later
+    prerequisite_function_ids: [irrigation.zone_schedules]
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: irrigation.manual_remote_control
+    system_id: irrigation_control
+    name_uk: Ручне дистанційне керування поливом
+    description_uk: Запуск або зупинка окремої зони поливу з інтерфейсу користувача.
+    applicable_property_types: [house]
+    applicable_room_types: []
+    applicable_location_types: [irrigation_area, yard, garden, greenhouse]
+    selection_unit: irrigation_zone
+    default_phase_priority: later
+    prerequisite_function_ids: [irrigation.zone_schedules]
+    technical_mvp: false
+    evidence_requirement: expert
+    final_engineering_required: false
+
+  - function_id: irrigation.fault_notification
+    system_id: irrigation_control
+    name_uk: Сповіщення про несправність поливу
+    description_uk: Повідомлення про підтримувану діагностичну подію системи поливу.
+    applicable_property_types: [house]
+    applicable_room_types: []
+    applicable_location_types: [irrigation_area, equipment_room]
+    selection_unit: irrigation_system
+    default_phase_priority: later
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: pool.filtration_schedules
+    system_id: pool_control
+    name_uk: Розклад фільтрації басейну
+    description_uk: Керування режимами сумісного фільтрувального обладнання за розкладом.
+    applicable_property_types: [house]
+    applicable_room_types: []
+    applicable_location_types: [pool, pool_plant_room]
+    selection_unit: pool_system
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: pool.temperature_control
+    system_id: pool_control
+    name_uk: Контроль температури басейну
+    description_uk: Вимірювання та керування сумісним обладнанням нагрівання води.
+    applicable_property_types: [house]
+    applicable_room_types: []
+    applicable_location_types: [pool, pool_plant_room]
+    selection_unit: pool_heating_zone
+    default_phase_priority: second
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: pool.water_parameter_monitoring
+    system_id: pool_control
+    name_uk: Моніторинг параметрів води
+    description_uk: Відображення параметрів, які фактично вимірюються сумісними датчиками басейну.
+    applicable_property_types: [house]
+    applicable_room_types: []
+    applicable_location_types: [pool, pool_plant_room]
+    selection_unit: water_measurement_point
+    default_phase_priority: second
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: pool.fault_notification
+    system_id: pool_control
+    name_uk: Сповіщення про несправність басейну
+    description_uk: Повідомлення про підтримувану аварійну або діагностичну подію обладнання басейну.
+    applicable_property_types: [house]
+    applicable_room_types: []
+    applicable_location_types: [pool, pool_plant_room]
+    selection_unit: pool_equipment
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: outdoor_heat.gutter_heating
+    system_id: roof_gutter_heating
+    name_uk: Підігрів жолобів і водостоків
+    description_uk: Керування нагрівальною зоною жолоба, водостоку або краю покрівлі.
+    applicable_property_types: [house]
+    applicable_room_types: []
+    applicable_location_types: [roof, gutter, downspout]
+    selection_unit: outdoor_heating_zone
+    default_phase_priority: second
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: outdoor_heat.walkway_heating
+    system_id: roof_gutter_heating
+    name_uk: Підігрів сходів і доріжок
+    description_uk: Керування нагрівальною зоною зовнішніх сходів або пішохідної доріжки.
+    applicable_property_types: [house]
+    applicable_room_types: []
+    applicable_location_types: [outdoor_stairs, path, entrance]
+    selection_unit: outdoor_heating_zone
+    default_phase_priority: second
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: outdoor_heat.driveway_heating
+    system_id: roof_gutter_heating
+    name_uk: Підігрів заїзду
+    description_uk: Керування нагрівальною зоною пандуса або автомобільного заїзду.
+    applicable_property_types: [house]
+    applicable_room_types: []
+    applicable_location_types: [driveway]
+    selection_unit: outdoor_heating_zone
+    default_phase_priority: later
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: outdoor_heat.automatic_weather_control
+    system_id: roof_gutter_heating
+    name_uk: Автоматичне керування за погодними умовами
+    description_uk: Запуск підтримуваної зони підігріву за даними відповідних погодних або поверхневих датчиків.
+    applicable_property_types: [house]
+    applicable_room_types: []
+    applicable_location_types: [roof, gutter, outdoor_stairs, path, driveway]
+    selection_unit: weather_control_zone
+    default_phase_priority: second
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: septic.level_monitoring
+    system_id: septic_monitoring
+    name_uk: Контроль рівня септика
+    description_uk: Вимірювання рівня або граничного стану автономної каналізації.
+    applicable_property_types: [house]
+    applicable_room_types: []
+    applicable_location_types: [septic_tank]
+    selection_unit: level_point
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: septic.fault_detection
+    system_id: septic_monitoring
+    name_uk: Виявлення аварії септика
+    description_uk: Контроль підтримуваного аварійного сигналу насоса, камери або іншого обладнання.
+    applicable_property_types: [house]
+    applicable_room_types: []
+    applicable_location_types: [septic_tank, septic_equipment]
+    selection_unit: fault_point
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: both
+    final_engineering_required: true
+
+  - function_id: septic.service_reminders
+    system_id: septic_monitoring
+    name_uk: Нагадування про обслуговування
+    description_uk: Нагадування про заплановану перевірку або обслуговування автономної каналізації.
+    applicable_property_types: [house]
+    applicable_room_types: []
+    applicable_location_types: [septic_tank]
+    selection_unit: septic_system
+    default_phase_priority: second
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: expert
+    final_engineering_required: false
+
+  - function_id: septic.remote_notification
+    system_id: septic_monitoring
+    name_uk: Дистанційне сповіщення про септик
+    description_uk: Повідомлення користувача про переповнення або підтримувану аварійну подію.
+    applicable_property_types: [house]
+    applicable_room_types: []
+    applicable_location_types: [whole_property]
+    selection_unit: whole_property
+    default_phase_priority: first
+    prerequisite_function_ids: []
+    technical_mvp: false
+    evidence_requirement: none
+    final_engineering_required: false

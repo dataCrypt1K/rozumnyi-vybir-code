@@ -1,0 +1,196 @@
+{
+  "schema_version": "0.1",
+  "format_note": "JSON-compatible YAML 1.2; readable by the Python standard library.",
+  "questions": [
+    {
+      "id": "property_type",
+      "section": "housing",
+      "text": "Ви живете у квартирі чи приватному будинку?",
+      "type": "single_choice",
+      "required": true,
+      "options": ["apartment", "house"]
+    },
+    {
+      "id": "project_stage",
+      "section": "housing",
+      "text": "На якому етапі перебуває об'єкт?",
+      "type": "single_choice",
+      "required": true,
+      "options": ["planning", "renovation", "completed", "reconstruction"]
+    },
+    {
+      "id": "absence_frequency",
+      "section": "lifestyle",
+      "text": "Як часто житло залишається без нагляду на цілий день або довше?",
+      "type": "single_choice",
+      "required": true,
+      "options": ["almost_never", "rarely", "often", "extended"]
+    },
+    {
+      "id": "comfort_priority",
+      "section": "priorities",
+      "text": "Наскільки для вас важливий комфорт?",
+      "type": "scale",
+      "required": true,
+      "min": 1,
+      "max": 5
+    },
+    {
+      "id": "energy_priority",
+      "section": "priorities",
+      "text": "Наскільки для вас важлива економія енергії?",
+      "type": "scale",
+      "required": true,
+      "min": 1,
+      "max": 5
+    },
+    {
+      "id": "safety_priority",
+      "section": "priorities",
+      "text": "Наскільки для вас важливий захист житла від аварій?",
+      "type": "scale",
+      "required": true,
+      "min": 1,
+      "max": 5
+    },
+    {
+      "id": "remote_control_interest",
+      "section": "preferences",
+      "text": "Наскільки вам важливе дистанційне керування через телефон?",
+      "type": "scale",
+      "required": true,
+      "min": 1,
+      "max": 5
+    },
+    {
+      "id": "automation_interest",
+      "section": "preferences",
+      "text": "Наскільки вам подобаються автоматичні сценарії без окремих команд?",
+      "type": "scale",
+      "required": true,
+      "min": 1,
+      "max": 5
+    },
+    {
+      "id": "heating_systems",
+      "section": "climate",
+      "text": "Які системи опалення вже є або заплановані?",
+      "type": "multi_choice",
+      "required": true,
+      "options": ["underfloor_heating", "radiators", "convectors", "fan_coils", "boiler", "other", "none"]
+    },
+    {
+      "id": "cooling_systems",
+      "section": "climate",
+      "text": "Які системи охолодження вже є або заплановані?",
+      "type": "multi_choice",
+      "required": true,
+      "options": ["air_conditioners", "fan_coils", "central_cooling", "other", "none"]
+    },
+    {
+      "id": "precondition_home",
+      "section": "climate",
+      "text": "Чи важливо заздалегідь нагрівати або охолоджувати житло до повернення?",
+      "type": "scale",
+      "required": true,
+      "min": 1,
+      "max": 5
+    },
+    {
+      "id": "zoned_temperature",
+      "section": "climate",
+      "text": "Чи потрібна різна температура в окремих кімнатах?",
+      "type": "scale",
+      "required": true,
+      "min": 1,
+      "max": 5
+    },
+    {
+      "id": "occupancy_based_climate",
+      "section": "climate",
+      "text": "Чи потрібно автоматично зменшувати опалення або охолодження у порожніх кімнатах?",
+      "type": "scale",
+      "required": true,
+      "min": 1,
+      "max": 5
+    },
+    {
+      "id": "lighting_group_count",
+      "section": "lighting",
+      "text": "Скільки незалежних груп освітлення приблизно планується?",
+      "type": "single_choice",
+      "required": true,
+      "options": ["one_to_three", "four_to_eight", "nine_or_more"]
+    },
+    {
+      "id": "dimming_interest",
+      "section": "lighting",
+      "text": "Наскільки потрібне регулювання яскравості?",
+      "type": "scale",
+      "required": true,
+      "min": 1,
+      "max": 5
+    },
+    {
+      "id": "color_temperature_interest",
+      "section": "lighting",
+      "text": "Наскільки потрібна зміна теплого і холодного відтінку світла?",
+      "type": "scale",
+      "required": true,
+      "min": 1,
+      "max": 5
+    },
+    {
+      "id": "rgb_interest",
+      "section": "lighting",
+      "text": "Наскільки потрібне кольорове RGB-освітлення?",
+      "type": "scale",
+      "required": true,
+      "min": 1,
+      "max": 5
+    },
+    {
+      "id": "presence_lighting_interest",
+      "section": "lighting",
+      "text": "Чи потрібно автоматично вмикати світло за присутністю або рухом?",
+      "type": "scale",
+      "required": true,
+      "min": 1,
+      "max": 5
+    },
+    {
+      "id": "lighting_scenes_interest",
+      "section": "lighting",
+      "text": "Наскільки потрібні сценарії освітлення: ранок, вечір, кіно, вихід із дому?",
+      "type": "scale",
+      "required": true,
+      "min": 1,
+      "max": 5
+    },
+    {
+      "id": "water_zones",
+      "section": "engineering_safety",
+      "text": "Скільки у житлі водних зон?",
+      "type": "integer",
+      "required": true,
+      "min": 0,
+      "max": 20
+    },
+    {
+      "id": "previous_leak",
+      "section": "engineering_safety",
+      "text": "Чи були раніше протікання або затоплення?",
+      "type": "boolean",
+      "required": true
+    },
+    {
+      "id": "automatic_shutoff_interest",
+      "section": "engineering_safety",
+      "text": "Наскільки важливе автоматичне перекриття води при протіканні?",
+      "type": "scale",
+      "required": true,
+      "min": 1,
+      "max": 5
+    }
+  ]
+}

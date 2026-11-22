@@ -1,0 +1,207 @@
+{
+  "schema_version": "2.8",
+  "model_id": "system_need_model_v2_8",
+  "status_thresholds": {"recommended": 51, "optional": 32},
+  "systems": [
+    {
+      "system_id": "climate_control",
+      "factor_weights": {"thermal_light_comfort": 0.45, "automation_delegation": 0.15, "energy_awareness": 0.15, "remote_oversight": 0.10, "routine_variability": 0.05},
+      "question_weights": {"q_temperature_differences": 0.25, "q_return_temperature": 0.20},
+      "object_signals": [
+        {"field_id": "heating_systems", "operator": "not_contains", "value": "none", "score": 70, "weight": 0.25, "reason_uk": "Є кероване або заплановане опалення."},
+        {"field_id": "cooling_systems", "operator": "not_contains", "value": "none", "score": 70, "weight": 0.15, "reason_uk": "Є кероване або заплановане охолодження."}
+      ]
+    },
+    {
+      "system_id": "ventilation_air_quality",
+      "factor_weights": {"health_air_quality": 0.60, "automation_delegation": 0.15, "maintenance_avoidance": 0.10, "remote_oversight": 0.05},
+      "question_weights": {"q_air_symptoms": 0.40},
+      "object_signals": [
+        {"field_id": "ventilation_equipment", "operator": "not_contains", "value": "none", "score": 75, "weight": 0.30, "reason_uk": "Є обладнання вентиляції або підготовки повітря."},
+        {"field_id": "vulnerable_residents", "operator": "equals", "value": true, "score": 85, "weight": 0.10, "reason_uk": "У житлі є мешканці, для яких стабільна якість повітря особливо важлива."}
+      ]
+    },
+    {
+      "system_id": "smart_lighting",
+      "factor_weights": {"automation_delegation": 0.35, "thermal_light_comfort": 0.20, "routine_variability": 0.10, "remote_oversight": 0.10},
+      "question_weights": {"q_light_adjustment": 0.35, "q_night_routes": 0.25, "q_repetitive_actions": 0.25, "q_leave_check": 0.15},
+      "object_signals": [
+        {"field_id": "vulnerable_residents", "operator": "equals", "value": true, "score": 75, "weight": 0.10, "reason_uk": "Автоматичне нічне та прохідне світло може підвищити безпеку мешканців."}
+      ]
+    },
+    {
+      "system_id": "shading_control",
+      "ignored_hard_rule_ids": ["SHADING_NO_MOTORS"],
+      "factor_weights": {"thermal_light_comfort": 0.35, "automation_delegation": 0.25, "maintenance_avoidance": 0.10, "energy_awareness": 0.10},
+      "question_weights": {"q_sun_discomfort": 0.50, "q_repetitive_actions": 0.10},
+      "object_signals": [
+        {"field_id": "motorized_shading_present", "operator": "equals", "value": true, "score": 70, "weight": 0.25, "reason_uk": "Передбачені моторизовані штори або жалюзі."}
+      ]
+    },
+    {
+      "system_id": "intrusion_alarm",
+      "factor_weights": {"security_need": 0.45, "risk_vigilance": 0.20, "remote_oversight": 0.20},
+      "question_weights": {"q_entry_uncertainty": 0.25, "q_home_unattended": 0.15},
+      "status_rules": [
+        {"rule_id": "INTRUSION_FREQUENT_ABSENCE_RECOMMENDED", "when": {"question_id": "q_home_unattended", "operator": "in", "value": ["often", "extended"]}, "status": "recommended", "score": 70, "reason_uk": "Житло часто або надовго залишається без нагляду, тому контроль проникнення рекомендований."},
+        {"rule_id": "INTRUSION_UNSUPERVISED_STAFF_ACCESS_RECOMMENDED", "when": {"all": [{"question_id": "home_staff_present", "operator": "equals", "value": true}, {"question_id": "q_visitors_absent", "operator": "equals", "value": "often"}]}, "status": "recommended", "score": 70, "reason_uk": "Регулярний доступ персоналу без власника підвищує потребу в контролі проникнення."},
+        {"rule_id": "INTRUSION_HOUSE_NO_PLOT_LOW_RISK_OPTIONAL", "when": {"all": [{"question_id": "property_type", "operator": "equals", "value": "house"}, {"question_id": "private_plot", "operator": "equals", "value": false}, {"question_id": "previous_intrusion", "operator": "equals", "value": false}, {"question_id": "q_home_unattended", "operator": "in", "value": ["almost_never", "rarely"]}]}, "status": "optional", "score": 50, "reason_uk": "Для будинку без власної ділянки, попередніх проникнень і тривалої відсутності охоронна сигналізація корисна, але не має найвищого пріоритету."}
+      ],
+      "answer_signals": [
+        {"field_id": "q_visual_verification", "operator": "equals", "value": "sensor_notification", "score": 75, "weight": 0.40, "reason_uk": "Для дистанційної перевірки користувачу достатньо події від охоронних датчиків."}
+      ],
+      "object_signals": [
+        {"field_id": "previous_intrusion", "operator": "equals", "value": true, "score": 100, "weight": 0.40, "reason_uk": "Раніше вже були проникнення або спроби злому."},
+        {"field_id": "exposed_access_points", "operator": "equals", "value": true, "score": 90, "weight": 0.30, "reason_uk": "Є легкодоступні вікна або кілька зовнішніх входів."},
+        {"field_id": "vulnerable_residents", "operator": "equals", "value": true, "score": 70, "weight": 0.10, "reason_uk": "У житлі є діти, літні люди або мешканці з обмеженою мобільністю."}
+      ]
+    },
+    {
+      "system_id": "video_surveillance",
+      "factor_weights": {"security_need": 0.25, "remote_oversight": 0.25, "risk_vigilance": 0.10},
+      "question_weights": {"q_home_unattended": 0.15},
+      "status_rules": [
+        {"rule_id": "VIDEO_PRIVACY_NOWHERE", "when": {"question_id": "q_camera_privacy", "operator": "equals", "value": "nowhere"}, "status": "inexpedient", "score": 0, "reason_uk": "Користувач прямо зазначив, що відеокамери для нього неприйнятні; охоронні потреби мають покриватися іншими системами."},
+        {"rule_id": "VIDEO_UNSUPERVISED_STAFF_ENTRY_RECOMMENDED", "when": {"all": [{"question_id": "home_staff_present", "operator": "equals", "value": true}, {"question_id": "q_visitors_absent", "operator": "equals", "value": "often"}, {"question_id": "q_camera_privacy", "operator": "in", "value": ["entrance_only", "exterior", "limited_indoor"]}]}, "status": "recommended", "score": 70, "reason_uk": "За регулярного доступу персоналу без власника й прийнятності камери біля входу відеоперевірка входу рекомендована."},
+        {"rule_id": "VIDEO_SENSOR_HIGH_RISK", "when": {"all": [{"question_id": "q_visual_verification", "operator": "equals", "value": "sensor_notification"}, {"question_id": "previous_intrusion", "operator": "equals", "value": true}]}, "status": "recommended", "score": 75, "reason_uk": "Навіть за достатності сповіщень попередній інцидент і прийнятність камер роблять відеоперевірку рекомендованою."},
+        {"rule_id": "VIDEO_SENSOR_NOTIFICATION_LIMITED", "when": {"question_id": "q_visual_verification", "operator": "equals", "value": "sensor_notification"}, "status": "optional", "score": 50, "reason_uk": "Користувачу достатньо події від датчика, але прийнятні камери можуть залишатися додатковим способом перевірки ситуації."}
+      ],
+      "answer_signals": [
+        {"field_id": "q_visual_verification", "operator": "equals", "value": "property_approaches", "score": 85, "weight": 0.80, "reason_uk": "Користувачу потрібна візуальна перевірка території або підходів до будинку."},
+        {"field_id": "q_visual_verification", "operator": "equals", "value": "selected_zones", "score": 100, "weight": 1.00, "reason_uk": "Користувачу потрібна візуальна перевірка декількох вибраних зон."}
+      ],
+      "object_signals": [
+        {"field_id": "previous_intrusion", "operator": "equals", "value": true, "score": 100, "weight": 0.20, "reason_uk": "Попередній досвід проникнення підвищує цінність відеоперевірки."},
+        {"field_id": "exposed_access_points", "operator": "equals", "value": true, "score": 85, "weight": 0.10, "reason_uk": "Є зони доступу, які доцільно контролювати візуально."}
+      ]
+    },
+    {
+      "system_id": "access_control",
+      "factor_weights": {"remote_oversight": 0.35, "security_need": 0.20, "automation_delegation": 0.20, "maintenance_avoidance": 0.10},
+      "question_weights": {"q_visitors_absent": 0.50, "q_entry_uncertainty": 0.20},
+      "status_rules": [
+        {"rule_id": "ACCESS_GATE_APPROACHES_RECOMMENDED", "when": {"all": [{"question_id": "gate_garage_present", "operator": "equals", "value": true}, {"question_id": "q_visual_verification", "operator": "equals", "value": "property_approaches"}]}, "status": "recommended", "score": 70, "reason_uk": "Є ворота або в'їзна зона, а власник хоче бачити підходи до ділянки; керований доступ рекомендований."}
+      ],
+      "answer_signals": [
+        {"field_id": "q_visual_verification", "operator": "equals", "value": "entrance_visitor", "score": 90, "weight": 0.70, "reason_uk": "Користувачу достатньо бачити відвідувача біля входу, що відповідає сценарію відеодомофона."}
+      ],
+      "object_signals": [
+        {"field_id": "home_staff_present", "operator": "equals", "value": true, "score": 90, "weight": 0.20, "reason_uk": "Регулярний доступ персоналу потребує керованих прав входу."},
+        {"field_id": "gate_garage_present", "operator": "equals", "value": true, "score": 70, "weight": 0.10, "reason_uk": "На об'єкті є ворота або гаражна в'їзна зона."}
+      ]
+    },
+    {
+      "system_id": "perimeter_security",
+      "factor_weights": {"security_need": 0.50, "risk_vigilance": 0.20, "remote_oversight": 0.15},
+      "question_weights": {"q_home_unattended": 0.15, "q_entry_uncertainty": 0.15},
+      "status_rules": [
+        {"rule_id": "PERIMETER_BOUNDARY_NOT_READY_OPTIONAL", "when": {"all": [{"question_id": "property_type", "operator": "equals", "value": "house"}, {"question_id": "private_plot", "operator": "equals", "value": true}, {"question_id": "perimeter_present", "operator": "equals", "value": false}]}, "status": "optional", "score": 50, "reason_uk": "Приватна ділянка є, але її межа ще не сформована; охорону периметра варто передбачити як опцію після підготовки території."},
+        {"rule_id": "PERIMETER_PLOT_LOW_NEED_INEXPEDIENT", "when": {"all": [{"question_id": "property_type", "operator": "equals", "value": "house"}, {"question_id": "private_plot", "operator": "equals", "value": true}, {"question_id": "perimeter_present", "operator": "equals", "value": true}, {"question_id": "previous_intrusion", "operator": "equals", "value": false}, {"question_id": "exposed_access_points", "operator": "equals", "value": false}, {"question_id": "q_home_unattended", "operator": "in", "value": ["almost_never", "rarely"]}, {"question_id": "q_entry_uncertainty", "operator": "in", "value": ["never", "rarely"]}]}, "status": "inexpedient", "score": 30, "reason_uk": "На сформованій ділянці не виявлено інцидентів, відкритих точок доступу або регулярної відсутності, тому окрема охорона периметра має низьку доцільність."}
+      ],
+      "object_signals": [
+        {"field_id": "private_plot", "operator": "equals", "value": true, "score": 65, "weight": 0.20, "reason_uk": "Є приватна ділянка, на якій можливе раннє виявлення проникнення."},
+        {"field_id": "previous_intrusion", "operator": "equals", "value": true, "score": 100, "weight": 0.40, "reason_uk": "Раніше вже були проникнення або спроби злому."},
+        {"field_id": "exposed_access_points", "operator": "equals", "value": true, "score": 90, "weight": 0.30, "reason_uk": "Об'єкт має відкриті або легкодоступні точки наближення."}
+      ]
+    },
+    {
+      "system_id": "leak_protection",
+      "factor_weights": {"risk_vigilance": 0.60, "remote_oversight": 0.20, "maintenance_avoidance": 0.20},
+      "question_weights": {"q_water_incident": 0.45, "q_home_unattended": 0.10},
+      "object_signals": [
+        {"field_id": "water_zones", "operator": "gte", "value": 1, "score": 75, "weight": 1.60, "reason_uk": "У житлі є водні зони з ризиком протікання."},
+        {"field_id": "water_zones", "operator": "gte", "value": 5, "score": 90, "weight": 0.90, "reason_uk": "П'ять або більше водних зон підвищують цінність автоматичного виявлення та перекриття води."},
+        {"field_id": "vulnerable_residents", "operator": "equals", "value": true, "score": 80, "weight": 0.15, "reason_uk": "Автоматичне перекриття зменшує потребу в ручному реагуванні мешканців."}
+      ]
+    },
+    {
+      "system_id": "fire_safety",
+      "factor_weights": {"risk_vigilance": 0.35, "remote_oversight": 0.15, "maintenance_avoidance": 0.10, "security_need": 0.10},
+      "question_weights": {"q_home_unattended": 0.10},
+      "status_rules": [
+        {"rule_id": "FIRE_NO_ADDITIONAL_RISK", "when": {"all": [{"question_id": "vulnerable_residents", "operator": "equals", "value": false}, {"question_id": "pets_present", "operator": "equals", "value": false}, {"question_id": "gas_co_sources", "operator": "contains", "value": "none"}]}, "status": "optional", "score": 40, "reason_uk": "Не виявлено мешканців або інженерних джерел, що підвищують пожежний ризик; базове раннє виявлення залишається опційним."}
+      ],
+      "object_signals": [
+        {"field_id": "household_size", "operator": "gte", "value": 1, "score": 80, "weight": 1.20, "reason_uk": "Постійно заселене житло потребує раннього виявлення пожежної небезпеки."},
+        {"field_id": "vulnerable_residents", "operator": "equals", "value": true, "score": 100, "weight": 0.35, "reason_uk": "Є мешканці, для яких раннє попередження особливо важливе."},
+        {"field_id": "pets_present", "operator": "equals", "value": true, "score": 85, "weight": 0.15, "reason_uk": "Домашні тварини можуть залишатися в житлі без людей."}
+      ]
+    },
+    {
+      "system_id": "gas_co_detection",
+      "factor_weights": {"risk_vigilance": 0.45, "remote_oversight": 0.20, "maintenance_avoidance": 0.15},
+      "question_weights": {"q_home_unattended": 0.10},
+      "object_signals": [
+        {"field_id": "gas_co_sources", "operator": "not_contains", "value": "none", "score": 85, "weight": 0.90, "reason_uk": "Є газовий прилад, камін, котел, генератор або інше джерело CO."},
+        {"field_id": "vulnerable_residents", "operator": "equals", "value": true, "score": 100, "weight": 0.20, "reason_uk": "У житлі є мешканці, для яких автоматичне попередження особливо важливе."}
+      ]
+    },
+    {
+      "system_id": "power_protection_monitoring",
+      "factor_weights": {"energy_awareness": 0.40, "continuity_resilience": 0.30, "risk_vigilance": 0.10, "remote_oversight": 0.05},
+      "question_weights": {"q_energy_checking": 0.25, "q_outage_impact": 0.25},
+      "object_signals": [
+        {"field_id": "electrical_panel_present", "operator": "equals", "value": true, "score": 75, "weight": 0.80, "reason_uk": "Є електрощит, у якому можна організувати контроль мережі та навантажень."}
+      ]
+    },
+    {
+      "system_id": "backup_power",
+      "factor_weights": {"continuity_resilience": 0.70, "risk_vigilance": 0.10, "remote_oversight": 0.05},
+      "question_weights": {"q_outage_impact": 0.60},
+      "object_signals": [
+        {"field_id": "critical_loads", "operator": "not_contains", "value": "none", "score": 100, "weight": 0.50, "reason_uk": "На об'єкті визначені навантаження, які мають працювати під час відключень."}
+      ]
+    },
+    {
+      "system_id": "multimedia_multiroom",
+      "factor_weights": {"media_social_use": 0.60, "automation_delegation": 0.10},
+      "question_weights": {"q_music_rooms": 0.45, "q_cinema_use": 0.45, "q_hosting": 0.20},
+      "object_signals": []
+    },
+    {
+      "system_id": "gate_garage_control",
+      "factor_weights": {"automation_delegation": 0.35, "remote_oversight": 0.35, "maintenance_avoidance": 0.15, "security_need": 0.10},
+      "question_weights": {"q_visitors_absent": 0.25, "q_repetitive_actions": 0.10},
+      "object_signals": [
+        {"field_id": "gate_garage_present", "operator": "equals", "value": true, "score": 75, "weight": 0.70, "reason_uk": "Є ворота або гаражні ворота, які можна автоматизувати."}
+      ]
+    },
+    {
+      "system_id": "irrigation_control",
+      "ignored_hard_rule_ids": ["IRRIGATION_NO_SYSTEM"],
+      "factor_weights": {"maintenance_avoidance": 0.45, "automation_delegation": 0.35, "energy_awareness": 0.10, "remote_oversight": 0.10},
+      "question_weights": {"q_repetitive_actions": 0.15},
+      "object_signals": [
+        {"field_id": "irrigation_present", "operator": "equals", "value": true, "score": 80, "weight": 0.80, "reason_uk": "На ділянці є або планується система поливу."}
+      ]
+    },
+    {
+      "system_id": "pool_control",
+      "factor_weights": {"maintenance_avoidance": 0.35, "automation_delegation": 0.30, "energy_awareness": 0.10, "remote_oversight": 0.10},
+      "question_weights": {"q_hosting": 0.15},
+      "object_signals": [
+        {"field_id": "pool_present", "operator": "equals", "value": true, "score": 80, "weight": 0.90, "reason_uk": "На об'єкті є або планується басейн з інженерним обладнанням."}
+      ]
+    },
+    {
+      "system_id": "roof_gutter_heating",
+      "ignored_hard_rule_ids": ["ROOF_HEATING_NO_RISK"],
+      "factor_weights": {"maintenance_avoidance": 0.35, "risk_vigilance": 0.25, "automation_delegation": 0.25},
+      "question_weights": {"q_repetitive_actions": 0.10},
+      "status_rules": [
+        {"rule_id": "ROOF_HEATING_NO_CONFIRMED_RISK", "when": {"question_id": "outdoor_ice_risk", "operator": "equals", "value": false}, "status": "optional", "score": 40, "reason_uk": "Проблему обмерзання не підтверджено, тому підігрів можна розглядати лише як низькопріоритетну опцію."}
+      ],
+      "object_signals": [
+        {"field_id": "outdoor_ice_risk", "operator": "equals", "value": true, "score": 90, "weight": 0.90, "reason_uk": "Є зовнішні зони з підтвердженим ризиком обмерзання."}
+      ]
+    },
+    {
+      "system_id": "septic_monitoring",
+      "factor_weights": {"maintenance_avoidance": 0.45, "risk_vigilance": 0.25, "remote_oversight": 0.20},
+      "question_weights": {"q_home_unattended": 0.10},
+      "object_signals": [
+        {"field_id": "septic_present", "operator": "equals", "value": true, "score": 80, "weight": 0.90, "reason_uk": "На об'єкті є автономна каналізація або септик."}
+      ]
+    }
+  ]
+}

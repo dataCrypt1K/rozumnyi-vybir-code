@@ -1,0 +1,33 @@
+{
+  "schema_version": "0.1",
+  "format_note": "JSON-compatible YAML 1.2; readable by the Python standard library.",
+  "systems": [
+    {
+      "system_id": "climate_control",
+      "name_uk": "Клімат-контроль",
+      "category": "comfort",
+      "description": "Автоматизоване керування опаленням, охолодженням і котельним обладнанням.",
+      "cost_class": "high",
+      "dependencies": ["central_controller", "compatible_climate_equipment"],
+      "included_features": ["zoning", "schedules", "remote_control", "occupancy_modes"]
+    },
+    {
+      "system_id": "smart_lighting",
+      "name_uk": "Розумне освітлення",
+      "category": "comfort",
+      "description": "Групове, сценарне й автоматичне керування освітленням.",
+      "cost_class": "medium",
+      "dependencies": ["central_controller", "controlled_lighting_circuits"],
+      "included_features": ["group_control", "dimming", "scenes", "presence_control"]
+    },
+    {
+      "system_id": "leak_protection",
+      "name_uk": "Захист від протікання",
+      "category": "engineering_safety",
+      "description": "Виявлення води та автоматичне перекриття водопостачання.",
+      "cost_class": "medium",
+      "dependencies": ["water_leak_sensors", "shutoff_valves"],
+      "included_features": ["leak_detection", "automatic_water_shutoff", "remote_notification"]
+    }
+  ]
+}

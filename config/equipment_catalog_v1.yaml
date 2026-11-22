@@ -1,0 +1,345 @@
+schema_version: "0.1"
+catalog_id: equipment_catalog_v1
+review_status: draft_for_expert_review
+source_checked_at: 2026-10-10
+scope_note_uk: >-
+  Мінімальний демонстраційний whitelist для покриття RO, DI, TRIAC, PWM і
+  DALI_ADDRESS. Каталог не є робочим проєктом, не перевіряє навантаження
+  та не замінює підбір живлення, захисту, кабелів і пусконалагодження.
+stacks:
+  i3:
+    mandatory_product_ids:
+      - i3.atom_cobalt
+    external_prerequisites:
+      - external:dc_power_supply_sized_by_integrator
+    policy_status: expert_assumption
+    policy_note_uk: >-
+      Atom Cobalt використовується як базовий контролер MVP. Тип і потужність
+      зовнішнього DC-живлення визначає інтегратор після підрахунку споживання.
+  knx:
+    mandatory_product_ids:
+      - knx.mdt_stv_0640_02
+      - knx.mdt_scn_ip000_03
+    external_prerequisites:
+      - external:ets_commissioning
+    policy_status: expert_assumption
+    policy_note_uk: >-
+      Для демонстраційного KNX-варіанта включаються блок живлення шини 640 mA
+      та IP-інтерфейс. Фактичне споживання шини і топологія перевіряються інженером.
+products:
+  - product_id: i3.atom_cobalt
+    manufacturer: i3 Engineering
+    model: Atom Cobalt
+    technology_stack: i3
+    roles: [controller]
+    mandatory: true
+    capabilities: {DI: 6, RO: 3}
+    requires_product_ids: []
+    external_prerequisites: [external:dc_power_supply_sized_by_integrator]
+    source_ref: https://i3engineering.com/atom-serie/en/atom-cobalt-en
+    source_checked_at: 2026-10-10
+    source_claim_uk: 6 багатофункціональних входів, 3 релейні виходи; живлення 12-24 V DC.
+    price_status: unavailable
+    final_engineering_required: true
+
+  - product_id: i3.atom_i21
+    manufacturer: i3 Engineering
+    model: Atom Extension I21
+    technology_stack: i3
+    roles: [input_module]
+    mandatory: false
+    capabilities: {DI: 21}
+    requires_product_ids: [i3.atom_cobalt]
+    external_prerequisites: [external:dc_power_supply_sized_by_integrator]
+    source_ref: https://i3engineering.com/atom-extension-series-en/atom-extension-i21-en
+    source_checked_at: 2026-10-10
+    source_claim_uk: 21 оптопарний вхід; CAN; живлення 9-48 V DC.
+    price_status: unavailable
+    final_engineering_required: true
+
+  - product_id: i3.atom_r12
+    manufacturer: i3 Engineering
+    model: Atom Extension R12
+    technology_stack: i3
+    roles: [relay_actuator]
+    mandatory: false
+    capabilities: {RO: 12}
+    requires_product_ids: [i3.atom_cobalt]
+    external_prerequisites: [external:dc_power_supply_sized_by_integrator]
+    source_ref: https://i3engineering.com/atom-extension-series-en/atom-extension-r8-en-1
+    source_checked_at: 2026-10-10
+    source_claim_uk: 8 реле 10 A та 4 реле 5 A; CAN; живлення 9-48 V DC.
+    price_status: unavailable
+    final_engineering_required: true
+
+  - product_id: i3.atom_r4ad6
+    manufacturer: i3 Engineering
+    model: Atom Extension R4AD6
+    technology_stack: i3
+    roles: [relay_actuator, ac_dimmer]
+    mandatory: false
+    capabilities: {RO: 4, TRIAC: 6}
+    requires_product_ids: [i3.atom_cobalt]
+    external_prerequisites: [external:dc_power_supply_sized_by_integrator]
+    source_ref: https://i3engineering.com/starting-guides-for-atom-series-controllers/en/extentions-atom-r4ad6/en
+    source_checked_at: 2026-10-10
+    source_claim_uk: 4 реле 5 A та 6 AC-димерів до 300 W на канал.
+    price_status: unavailable
+    final_engineering_required: true
+
+  - product_id: i3.atom_r4dd8
+    manufacturer: i3 Engineering
+    model: Atom Extension R4DD8
+    technology_stack: i3
+    roles: [relay_actuator, pwm_dimmer]
+    mandatory: false
+    capabilities: {RO: 4, PWM: 8}
+    requires_product_ids: [i3.atom_cobalt]
+    external_prerequisites: [external:dc_power_supply_sized_by_integrator]
+    source_ref: https://i3engineering.com/atom-extension-series-en/atom-extension-r4dd8-en
+    source_checked_at: 2026-10-10
+    source_claim_uk: 4 реле 5 A та 8 MOSFET PWM-димерів для DC-навантажень.
+    price_status: unavailable
+    final_engineering_required: true
+
+  - product_id: i3.atom_dali
+    manufacturer: i3 Engineering
+    model: Atom Extension DALI
+    technology_stack: i3
+    roles: [dali_gateway]
+    mandatory: false
+    capabilities: {DALI_ADDRESS: 64}
+    requires_product_ids: [i3.atom_cobalt]
+    external_prerequisites:
+      - external:dc_power_supply_sized_by_integrator
+      - external:dali_bus_power_supply
+    source_ref: https://i3engineering.com/atom-extension-series-en/atom-extension-1u-dali-en
+    source_checked_at: 2026-10-10
+    source_claim_uk: До 64 DALI-пристроїв; CAN; окреме живлення DALI-шини є зовнішньою передумовою.
+    price_status: unavailable
+    final_engineering_required: true
+
+  - product_id: knx.mdt_stv_0640_02
+    manufacturer: MDT technologies
+    model: STV-0640.02
+    technology_stack: knx
+    roles: [bus_power_supply]
+    mandatory: true
+    capabilities: {}
+    requires_product_ids: []
+    external_prerequisites: []
+    source_ref: https://www.mdt.de/produkte/produktdetail/systemkomponenten/spannungsversorgungen/busspannungsversorgung-stv.html
+    source_checked_at: 2026-10-10
+    source_claim_uk: KNX-живлення 640 mA з інтегрованим дроселем, 4 TE.
+    price_status: unavailable
+    final_engineering_required: true
+
+  - product_id: knx.mdt_scn_ip000_03
+    manufacturer: MDT technologies
+    model: SCN-IP000.03
+    technology_stack: knx
+    roles: [programming_interface]
+    mandatory: true
+    capabilities: {}
+    requires_product_ids: [knx.mdt_stv_0640_02]
+    external_prerequisites: [external:ets_commissioning]
+    source_ref: https://www.mdt.de/produkte/produktdetail/systemkomponenten/systemgeraete/ip-interface.html
+    source_checked_at: 2026-10-10
+    source_claim_uk: KNX-IP інтерфейс, 4 одночасні з’єднання, живлення від KNX-шини.
+    price_status: unavailable
+    final_engineering_required: true
+
+  - product_id: knx.mdt_akk_0416_03
+    manufacturer: MDT technologies
+    model: AKK-0416.03
+    technology_stack: knx
+    roles: [relay_actuator]
+    mandatory: false
+    capabilities: {RO: 4}
+    requires_product_ids: [knx.mdt_stv_0640_02]
+    external_prerequisites: []
+    source_ref: https://www.mdt.de/produkte/produktdetail/aktorik/schaltaktoren/schaltaktor-akk-kompakt.html
+    source_checked_at: 2026-10-10
+    source_claim_uk: 4-канальний KNX-релейний актор, 16 A.
+    price_status: unavailable
+    final_engineering_required: true
+
+  - product_id: knx.mdt_akk_0816_03
+    manufacturer: MDT technologies
+    model: AKK-0816.03
+    technology_stack: knx
+    roles: [relay_actuator]
+    mandatory: false
+    capabilities: {RO: 8}
+    requires_product_ids: [knx.mdt_stv_0640_02]
+    external_prerequisites: []
+    source_ref: https://www.mdt.de/produkte/produktdetail/aktorik/schaltaktoren/schaltaktor-akk-kompakt.html
+    source_checked_at: 2026-10-10
+    source_claim_uk: 8-канальний KNX-релейний актор, 16 A.
+    price_status: unavailable
+    final_engineering_required: true
+
+  - product_id: knx.mdt_akk_1616_03
+    manufacturer: MDT technologies
+    model: AKK-1616.03
+    technology_stack: knx
+    roles: [relay_actuator]
+    mandatory: false
+    capabilities: {RO: 16}
+    requires_product_ids: [knx.mdt_stv_0640_02]
+    external_prerequisites: []
+    source_ref: https://www.mdt.de/produkte/produktdetail/aktorik/schaltaktoren/schaltaktor-akk-kompakt.html
+    source_checked_at: 2026-10-10
+    source_claim_uk: 16-канальний KNX-релейний актор, 16 A.
+    price_status: unavailable
+    final_engineering_required: true
+
+  - product_id: knx.mdt_akk_2416_03
+    manufacturer: MDT technologies
+    model: AKK-2416.03
+    technology_stack: knx
+    roles: [relay_actuator]
+    mandatory: false
+    capabilities: {RO: 24}
+    requires_product_ids: [knx.mdt_stv_0640_02]
+    external_prerequisites: []
+    source_ref: https://www.mdt.de/produkte/produktdetail/aktorik/schaltaktoren/schaltaktor-akk-kompakt.html
+    source_checked_at: 2026-10-10
+    source_claim_uk: 24-канальний KNX-релейний актор, 16 A.
+    price_status: unavailable
+    final_engineering_required: true
+
+  - product_id: knx.mdt_be_04000_02
+    manufacturer: MDT technologies
+    model: BE-04000.02
+    technology_stack: knx
+    roles: [input_module]
+    mandatory: false
+    capabilities: {DI: 4}
+    requires_product_ids: [knx.mdt_stv_0640_02]
+    external_prerequisites: []
+    source_ref: https://www.mdt.de/download/MDT_DS_Binary_Input_02.pdf
+    source_checked_at: 2026-10-10
+    source_claim_uk: 4 дискретні входи для безпотенційних контактів.
+    price_status: unavailable
+    final_engineering_required: true
+
+  - product_id: knx.mdt_be_08000_02
+    manufacturer: MDT technologies
+    model: BE-08000.02
+    technology_stack: knx
+    roles: [input_module]
+    mandatory: false
+    capabilities: {DI: 8}
+    requires_product_ids: [knx.mdt_stv_0640_02]
+    external_prerequisites: []
+    source_ref: https://www.mdt.de/download/MDT_DS_Binary_Input_02.pdf
+    source_checked_at: 2026-10-10
+    source_claim_uk: 8 дискретних входів для безпотенційних контактів.
+    price_status: unavailable
+    final_engineering_required: true
+
+  - product_id: knx.mdt_be_16000_02
+    manufacturer: MDT technologies
+    model: BE-16000.02
+    technology_stack: knx
+    roles: [input_module]
+    mandatory: false
+    capabilities: {DI: 16}
+    requires_product_ids: [knx.mdt_stv_0640_02]
+    external_prerequisites: []
+    source_ref: https://www.mdt.de/download/MDT_DS_Binary_Input_02.pdf
+    source_checked_at: 2026-10-10
+    source_claim_uk: 16 дискретних входів для безпотенційних контактів.
+    price_status: unavailable
+    final_engineering_required: true
+
+  - product_id: knx.mdt_be_32000_02
+    manufacturer: MDT technologies
+    model: BE-32000.02
+    technology_stack: knx
+    roles: [input_module]
+    mandatory: false
+    capabilities: {DI: 32}
+    requires_product_ids: [knx.mdt_stv_0640_02]
+    external_prerequisites: []
+    source_ref: https://www.mdt.de/download/MDT_DS_Binary_Input_02.pdf
+    source_checked_at: 2026-10-10
+    source_claim_uk: 32 дискретні входи для безпотенційних контактів.
+    price_status: unavailable
+    final_engineering_required: true
+
+  - product_id: knx.mdt_akd_0201_02
+    manufacturer: MDT technologies
+    model: AKD-0201.02
+    technology_stack: knx
+    roles: [ac_dimmer]
+    mandatory: false
+    capabilities: {TRIAC: 2}
+    requires_product_ids: [knx.mdt_stv_0640_02]
+    external_prerequisites: []
+    source_ref: https://www.mdt.de/download/MDT_DS_Dimming_Actuator_02.pdf
+    source_checked_at: 2026-10-10
+    source_claim_uk: 2-канальний KNX-актор димування AC-навантажень.
+    price_status: unavailable
+    final_engineering_required: true
+
+  - product_id: knx.mdt_akd_0401_02
+    manufacturer: MDT technologies
+    model: AKD-0401.02
+    technology_stack: knx
+    roles: [ac_dimmer]
+    mandatory: false
+    capabilities: {TRIAC: 4}
+    requires_product_ids: [knx.mdt_stv_0640_02]
+    external_prerequisites: []
+    source_ref: https://www.mdt.de/download/MDT_DS_Dimming_Actuator_02.pdf
+    source_checked_at: 2026-10-10
+    source_claim_uk: 4-канальний KNX-актор димування AC-навантажень.
+    price_status: unavailable
+    final_engineering_required: true
+
+  - product_id: knx.mdt_akd_0224v_02
+    manufacturer: MDT technologies
+    model: AKD-0224V.02
+    technology_stack: knx
+    roles: [pwm_dimmer]
+    mandatory: false
+    capabilities: {PWM: 2}
+    requires_product_ids: [knx.mdt_stv_0640_02]
+    external_prerequisites: [external:led_power_supply_sized_by_integrator]
+    source_ref: https://www.mdt.de/produkte/produktdetail/aktorik/dimmaktoren/led-controller-akd-up.html
+    source_checked_at: 2026-10-10
+    source_claim_uk: 2 PWM-канали для 12/24 V constant-voltage LED.
+    price_status: unavailable
+    final_engineering_required: true
+
+  - product_id: knx.mdt_akd_0424v_02
+    manufacturer: MDT technologies
+    model: AKD-0424V.02
+    technology_stack: knx
+    roles: [pwm_dimmer]
+    mandatory: false
+    capabilities: {PWM: 4}
+    requires_product_ids: [knx.mdt_stv_0640_02]
+    external_prerequisites: [external:led_power_supply_sized_by_integrator]
+    source_ref: https://www.mdt.de/produkte/produktdetail/aktorik/dimmaktoren/led-controller-akd-up.html
+    source_checked_at: 2026-10-10
+    source_claim_uk: 4 PWM-канали для 12/24 V constant-voltage LED.
+    price_status: unavailable
+    final_engineering_required: true
+
+  - product_id: knx.mdt_scn_da641_04
+    manufacturer: MDT technologies
+    model: SCN-DA641.04
+    technology_stack: knx
+    roles: [dali_gateway]
+    mandatory: false
+    capabilities: {DALI_ADDRESS: 64}
+    requires_product_ids: [knx.mdt_stv_0640_02]
+    external_prerequisites: []
+    source_ref: https://www.mdt.de/produkte/produktdetail/aktorik/dimmaktoren/dali-control-64-gateway.html
+    source_checked_at: 2026-10-10
+    source_claim_uk: 1 DALI-вихід, індивідуальне керування до 64 ECG та 16 DALI-груп.
+    price_status: unavailable
+    final_engineering_required: true

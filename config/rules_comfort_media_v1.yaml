@@ -1,0 +1,50 @@
+{
+  "schema_version": "0.1",
+  "review_status": "draft_for_expert_review",
+  "base_score": 50,
+  "status_thresholds": {"recommended": 70, "optional": 40},
+  "systems": {
+    "ventilation_air_quality": {
+      "factor_group_caps": {"equipment": 15, "air_quality": 30, "household": 20, "efficiency": 10},
+      "hard_rules": [],
+      "score_rules": [
+        {"rule_id": "VENTILATION_EQUIPMENT_PRESENT", "question_id": "ventilation_equipment", "operator": "not_contains", "value": "none", "points": 15, "factor_group": "equipment", "reason": "Є обладнання вентиляції або підготовки повітря, яке можна автоматизувати."},
+        {"rule_id": "VENTILATION_AIR_QUALITY_HIGH", "question_id": "air_quality_interest", "operator": "gte", "value": 4, "points": 20, "factor_group": "air_quality", "reason": "Користувачу важливий контроль CO2, вологості та якості повітря."},
+        {"rule_id": "VENTILATION_COMFORT_HIGH", "question_id": "comfort_priority", "operator": "gte", "value": 4, "points": 10, "factor_group": "air_quality", "reason": "Комфорт мікроклімату має високий пріоритет."},
+        {"rule_id": "VENTILATION_LARGE_HOME", "question_id": "home_area_m2", "operator": "gte", "value": 120, "points": 5, "factor_group": "household", "reason": "Велика площа підвищує цінність автоматичного контролю повітрообміну."},
+        {"rule_id": "VENTILATION_LARGE_HOUSEHOLD", "question_id": "household_size", "operator": "gte", "value": 3, "points": 10, "factor_group": "household", "reason": "Кілька мешканців сильніше впливають на CO2 та вологість."},
+        {"rule_id": "VENTILATION_VULNERABLE_RESIDENTS", "question_id": "vulnerable_residents", "operator": "equals", "value": true, "points": 10, "factor_group": "household", "reason": "Серед мешканців є люди, для яких стабільна якість повітря особливо важлива."},
+        {"rule_id": "VENTILATION_AUTOMATION_HIGH", "question_id": "automation_interest", "operator": "gte", "value": 4, "points": 5, "factor_group": "air_quality", "reason": "Користувачу потрібне автоматичне керування без ручних команд."},
+        {"rule_id": "VENTILATION_ENERGY_HIGH", "question_id": "energy_priority", "operator": "gte", "value": 4, "points": 5, "factor_group": "efficiency", "reason": "Важлива енергоефективна робота вентиляції."},
+        {"rule_id": "VENTILATION_LOW_NEED", "all": [{"question_id": "air_quality_interest", "operator": "lte", "value": 2}, {"question_id": "comfort_priority", "operator": "lte", "value": 2}], "points": -20, "factor_group": "air_quality", "reason": "Контроль якості повітря та комфорт мікроклімату мають низький пріоритет."}
+      ]
+    },
+    "shading_control": {
+      "factor_group_caps": {"equipment": 15, "comfort": 30, "weather": 20, "scenarios": 10},
+      "hard_rules": [{"rule_id": "SHADING_NO_MOTORS", "all": [{"question_id": "motorized_shading_present", "operator": "equals", "value": false}], "result": "not_applicable", "reason": "Не зазначено моторизованих або запланованих штор, жалюзі чи маркіз."}],
+      "score_rules": [
+        {"rule_id": "SHADING_MOTORS_PRESENT", "question_id": "motorized_shading_present", "operator": "equals", "value": true, "points": 15, "factor_group": "equipment", "reason": "Є моторизований сонцезахист, який можна автоматизувати."},
+        {"rule_id": "SHADING_INTEREST_HIGH", "question_id": "shading_automation_interest", "operator": "gte", "value": 4, "points": 20, "factor_group": "comfort", "reason": "Потрібне автоматичне керування шторами або жалюзі."},
+        {"rule_id": "SHADING_OVERHEATING", "question_id": "sun_overheating_problem", "operator": "equals", "value": true, "points": 15, "factor_group": "comfort", "reason": "Сонце спричиняє перегрів або дискомфорт у приміщеннях."},
+        {"rule_id": "SHADING_WEATHER_ELEMENTS", "question_id": "weather_sensitive_elements", "operator": "equals", "value": true, "points": 10, "factor_group": "weather", "reason": "Зовнішні елементи потрібно захищати від дощу або вітру."},
+        {"rule_id": "SHADING_WEATHER_HIGH", "question_id": "weather_automation_interest", "operator": "gte", "value": 4, "points": 10, "factor_group": "weather", "reason": "Потрібне погодозалежне керування сонцезахистом."},
+        {"rule_id": "SHADING_COMFORT_HIGH", "question_id": "comfort_priority", "operator": "gte", "value": 4, "points": 5, "factor_group": "comfort", "reason": "Комфорт має високий пріоритет."},
+        {"rule_id": "SHADING_SCENES_HIGH", "question_id": "lighting_scenes_interest", "operator": "gte", "value": 4, "points": 5, "factor_group": "scenarios", "reason": "Штори можна включити до ранкових, вечірніх та інших сценаріїв."},
+        {"rule_id": "SHADING_LOW_NEED", "all": [{"question_id": "shading_automation_interest", "operator": "lte", "value": 2}, {"question_id": "sun_overheating_problem", "operator": "equals", "value": false}, {"question_id": "weather_automation_interest", "operator": "lte", "value": 2}], "points": -20, "factor_group": "comfort", "reason": "Немає проблеми перегріву та інтересу до автоматичного або погодозалежного керування."}
+      ]
+    },
+    "multimedia_multiroom": {
+      "factor_group_caps": {"priority": 20, "cinema": 20, "audio": 20, "household": 10, "integration": 10},
+      "hard_rules": [],
+      "score_rules": [
+        {"rule_id": "MEDIA_PRIORITY_HIGH", "question_id": "multimedia_priority", "operator": "gte", "value": 4, "points": 20, "factor_group": "priority", "reason": "Домашні мультимедіа мають високий пріоритет."},
+        {"rule_id": "MEDIA_CINEMA_HIGH", "question_id": "home_cinema_interest", "operator": "gte", "value": 4, "points": 20, "factor_group": "cinema", "reason": "Потрібен домашній кінотеатр або централізоване керування медіа."},
+        {"rule_id": "MEDIA_MULTIROOM_HIGH", "question_id": "multiroom_audio_interest", "operator": "gte", "value": 4, "points": 20, "factor_group": "audio", "reason": "Потрібна музика в кількох кімнатах або фонове аудіо."},
+        {"rule_id": "MEDIA_HOUSEHOLD", "question_id": "household_size", "operator": "gte", "value": 3, "points": 5, "factor_group": "household", "reason": "Кільком мешканцям корисні незалежні мультимедійні зони."},
+        {"rule_id": "MEDIA_AUTOMATION_HIGH", "question_id": "automation_interest", "operator": "gte", "value": 4, "points": 5, "factor_group": "integration", "reason": "Мультимедіа можна поєднати зі сценаріями освітлення та штор."},
+        {"rule_id": "MEDIA_VOICE_HIGH", "question_id": "voice_control_interest", "operator": "gte", "value": 4, "points": 5, "factor_group": "integration", "reason": "Потрібне голосове керування медіа та аудіо."},
+        {"rule_id": "MEDIA_LOW_NEED", "all": [{"question_id": "multimedia_priority", "operator": "lte", "value": 2}, {"question_id": "home_cinema_interest", "operator": "lte", "value": 2}, {"question_id": "multiroom_audio_interest", "operator": "lte", "value": 2}], "points": -25, "factor_group": "priority", "reason": "Домашній кінотеатр, мультирум і мультимедіа не є пріоритетом."}
+      ]
+    }
+  }
+}

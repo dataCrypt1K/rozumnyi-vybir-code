@@ -1,0 +1,39 @@
+{
+  "schema_version": "2.0",
+  "registry_id": "object_parameters_v2",
+  "readiness_threshold_percent": 85,
+  "parameters": [
+    {"field_id": "property_type", "label_uk": "Тип житла", "group": "core", "weight": 3, "required": true, "value_type": "single_choice", "options": ["apartment", "house"]},
+    {"field_id": "project_stage", "label_uk": "Стадія об'єкта", "group": "core", "weight": 3, "required": true, "value_type": "single_choice", "options": ["planning", "renovation", "completed", "reconstruction"]},
+    {"field_id": "home_area_m2", "label_uk": "Площа житла", "group": "core", "weight": 3, "required": true, "value_type": "number", "min": 10, "max": 10000},
+    {"field_id": "floor_count", "label_uk": "Кількість рівнів", "group": "core", "weight": 3, "required": true, "value_type": "integer", "min": 1, "max": 100},
+    {"field_id": "rooms", "label_uk": "Перелік приміщень", "group": "core", "weight": 3, "required": true, "value_type": "room_list"},
+    {"field_id": "entrance_count", "label_uk": "Кількість входів", "group": "core", "weight": 3, "required": true, "value_type": "integer", "min": 1, "max": 30},
+    {"field_id": "water_zones", "label_uk": "Кількість водних зон", "group": "core", "weight": 3, "required": true, "value_type": "integer", "min": 0, "max": 100},
+    {"field_id": "electrical_panel_present", "label_uk": "Електрощит", "group": "core", "weight": 3, "required": true, "value_type": "boolean"},
+    {"field_id": "heating_systems", "label_uk": "Опалення", "group": "core", "weight": 3, "required": true, "value_type": "multi_choice", "options": ["underfloor_heating", "radiators", "convectors", "fan_coils", "boiler", "other", "none"]},
+    {"field_id": "cooling_systems", "label_uk": "Охолодження", "group": "core", "weight": 3, "required": true, "value_type": "multi_choice", "options": ["air_conditioners", "fan_coils", "central_cooling", "other", "none"]},
+
+    {"field_id": "ventilation_equipment", "label_uk": "Вентиляція та підготовка повітря", "group": "conditional", "weight": 2, "required": false, "value_type": "multi_choice", "options": ["exhaust", "supply_exhaust", "heat_recovery", "humidifier", "other", "none"]},
+    {"field_id": "gas_co_sources", "label_uk": "Джерела ризику газу або CO", "group": "conditional", "weight": 2, "required": true, "value_type": "multi_choice", "options": ["gas_stove", "gas_boiler", "fireplace", "solid_fuel_boiler", "generator", "other", "none"]},
+    {"field_id": "water_entry_present", "label_uk": "Доступ до вводу води", "group": "conditional", "weight": 2, "required": true, "value_type": "boolean"},
+    {"field_id": "motorized_shading_present", "label_uk": "Моторизовані штори або жалюзі", "group": "conditional", "weight": 2, "required": false, "value_type": "boolean"},
+    {"field_id": "cabling_possible", "label_uk": "Можливість прокладання кабелю", "group": "conditional", "weight": 2, "required": true, "value_type": "boolean"},
+
+    {"field_id": "private_plot", "label_uk": "Приватна ділянка", "group": "conditional", "weight": 2, "required": true, "value_type": "boolean", "required_when": {"field_id": "property_type", "equals": "house"}},
+    {"field_id": "perimeter_present", "label_uk": "Власний периметр", "group": "conditional", "weight": 2, "required": true, "value_type": "boolean", "required_when": {"field_id": "private_plot", "equals": true}},
+    {"field_id": "gate_garage_present", "label_uk": "Ворота або гараж", "group": "conditional", "weight": 2, "required": true, "value_type": "boolean", "required_when": {"field_id": "property_type", "equals": "house"}},
+    {"field_id": "pool_present", "label_uk": "Басейн", "group": "conditional", "weight": 2, "required": true, "value_type": "boolean", "required_when": {"field_id": "private_plot", "equals": true}},
+    {"field_id": "irrigation_present", "label_uk": "Автоматичний полив", "group": "conditional", "weight": 2, "required": true, "value_type": "boolean", "required_when": {"field_id": "private_plot", "equals": true}},
+    {"field_id": "septic_present", "label_uk": "Септик або автономна каналізація", "group": "conditional", "weight": 2, "required": true, "value_type": "boolean", "required_when": {"field_id": "property_type", "equals": "house"}},
+    {"field_id": "roof_gutters_present", "label_uk": "Дах і водостоки", "group": "conditional", "weight": 2, "required": false, "value_type": "boolean", "required_when": {"field_id": "property_type", "equals": "house"}},
+    {"field_id": "boiler_room_present", "label_uk": "Окрема котельня", "group": "conditional", "weight": 2, "required": true, "value_type": "boolean", "required_when": {"field_id": "property_type", "equals": "house"}},
+    {"field_id": "backup_power_sources", "label_uk": "Резервні джерела живлення", "group": "conditional", "weight": 2, "required": false, "value_type": "multi_choice", "options": ["inverter", "battery", "generator", "other", "none"]},
+
+    {"field_id": "lighting_group_count", "label_uk": "Кількість груп освітлення", "group": "detail", "weight": 1, "required": false, "value_type": "single_choice", "options": ["one_to_three", "four_to_eight", "nine_or_more"]},
+    {"field_id": "heating_zones", "label_uk": "Зони опалення по приміщеннях", "group": "detail", "weight": 1, "required": false, "value_type": "location_count_map"},
+    {"field_id": "cooling_zones", "label_uk": "Зони охолодження по приміщеннях", "group": "detail", "weight": 1, "required": false, "value_type": "location_count_map"},
+    {"field_id": "leak_points", "label_uk": "Точки контролю протікання", "group": "detail", "weight": 1, "required": false, "value_type": "location_count_map"},
+    {"field_id": "shading_drives", "label_uk": "Приводи штор по приміщеннях", "group": "detail", "weight": 1, "required": false, "value_type": "location_count_map"}
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "schema_version": "0.1",
+  "profiles": [
+    {"profile_id": "apartment_frequent_travel_previous_leak", "answers": {"irrigation_present": false, "pool_present": false, "outdoor_ice_risk": false, "septic_present": false}, "expected_statuses": {"gate_garage_control": "not_applicable", "irrigation_control": "not_applicable", "pool_control": "not_applicable", "roof_gutter_heating": "not_applicable", "septic_monitoring": "not_applicable"}},
+    {"profile_id": "house_high_comfort_automation", "answers": {"irrigation_present": true, "pool_present": true, "outdoor_ice_risk": true, "septic_present": true}, "expected_statuses": {"gate_garage_control": "recommended", "irrigation_control": "recommended", "pool_control": "recommended", "roof_gutter_heating": "recommended", "septic_monitoring": "recommended"}},
+    {"profile_id": "apartment_low_automation", "answers": {"irrigation_present": false, "pool_present": false, "outdoor_ice_risk": false, "septic_present": false}, "expected_statuses": {"gate_garage_control": "not_applicable", "irrigation_control": "not_applicable", "pool_control": "not_applicable", "roof_gutter_heating": "not_applicable", "septic_monitoring": "not_applicable"}},
+    {"profile_id": "house_no_controllable_climate", "answers": {"irrigation_present": false, "pool_present": false, "outdoor_ice_risk": false, "septic_present": false}, "expected_statuses": {"gate_garage_control": "not_applicable", "irrigation_control": "not_applicable", "pool_control": "not_applicable", "roof_gutter_heating": "not_applicable", "septic_monitoring": "not_applicable"}},
+    {"profile_id": "technical_profile_without_water", "answers": {"irrigation_present": true, "pool_present": false, "outdoor_ice_risk": true, "septic_present": true}, "expected_statuses": {"gate_garage_control": "recommended", "irrigation_control": "recommended", "pool_control": "not_applicable", "roof_gutter_heating": "recommended", "septic_monitoring": "recommended"}}
+  ]
+}

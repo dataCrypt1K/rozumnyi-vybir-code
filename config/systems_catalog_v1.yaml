@@ -1,0 +1,216 @@
+{
+  "schema_version": "0.1",
+  "format_note": "Повний чернетковий каталог. Активний прототип поки використовує systems.yaml із трьома системами.",
+  "review_status": "draft_for_expert_review",
+  "systems": [
+    {
+      "system_id": "climate_control",
+      "name_uk": "Клімат-контроль",
+      "category": "comfort",
+      "description": "Автоматизоване керування опаленням, охолодженням і котельним обладнанням.",
+      "property_types": ["apartment", "house"],
+      "cost_class": "high",
+      "hard_prerequisites": ["Наявне або заплановане кероване обладнання опалення чи охолодження."],
+      "dependencies": ["central_controller", "compatible_climate_equipment"],
+      "included_features": ["zoning", "schedules", "remote_control", "occupancy_modes", "boiler_monitoring"]
+    },
+    {
+      "system_id": "ventilation_air_quality",
+      "name_uk": "Вентиляція та якість повітря",
+      "category": "comfort",
+      "description": "Керування підтвердженою вентиляцією та окремий моніторинг вологості й CO2.",
+      "property_types": ["apartment", "house"],
+      "cost_class": "high",
+      "hard_prerequisites": [],
+      "dependencies": ["air_quality_sensors"],
+      "included_features": ["co2_monitoring", "humidity_control", "ventilation_control", "air_quality_notifications"]
+    },
+    {
+      "system_id": "smart_lighting",
+      "name_uk": "Розумне освітлення",
+      "category": "comfort",
+      "description": "Групове, сценарне й автоматичне керування освітленням.",
+      "property_types": ["apartment", "house"],
+      "cost_class": "medium",
+      "hard_prerequisites": [],
+      "dependencies": ["central_controller", "controlled_lighting_circuits"],
+      "included_features": ["group_control", "dimming", "scenes", "presence_control", "master_off"]
+    },
+    {
+      "system_id": "shading_control",
+      "name_uk": "Керування шторами та жалюзі",
+      "category": "comfort",
+      "description": "Автоматизація моторизованих штор, жалюзі, маркіз і сонцезахисту.",
+      "property_types": ["apartment", "house"],
+      "cost_class": "high",
+      "hard_prerequisites": ["Моторизовані або заплановані штори, жалюзі чи зовнішній сонцезахист."],
+      "dependencies": ["motorized_shading", "controlled_power_or_bus"],
+      "included_features": ["scheduled_opening", "scenes", "sun_protection", "weather_protection"]
+    },
+    {
+      "system_id": "intrusion_alarm",
+      "name_uk": "Охоронна сигналізація",
+      "category": "security",
+      "description": "Виявлення проникнення до житла та локальне або дистанційне сповіщення.",
+      "property_types": ["apartment", "house"],
+      "cost_class": "medium",
+      "hard_prerequisites": [],
+      "dependencies": ["security_sensors", "alarm_controller"],
+      "included_features": ["motion_detection", "opening_detection", "siren", "arming_modes", "notifications"]
+    },
+    {
+      "system_id": "video_surveillance",
+      "name_uk": "Відеоспостереження",
+      "category": "security",
+      "description": "Дистанційний відеоконтроль входу, двору або окремих зон житла з урахуванням приватності.",
+      "property_types": ["apartment", "house"],
+      "cost_class": "high",
+      "hard_prerequisites": ["Є законне та приватно прийнятне місце встановлення камер."],
+      "dependencies": ["network_infrastructure", "camera_power", "video_storage"],
+      "included_features": ["live_view", "recording", "motion_events", "remote_access"]
+    },
+    {
+      "system_id": "access_control",
+      "name_uk": "Домофон і контроль доступу",
+      "category": "security",
+      "description": "Контроль приватного входу, домофон, електричні замки та доступ без звичайного ключа.",
+      "property_types": ["house"],
+      "cost_class": "medium",
+      "hard_prerequisites": ["Приватний будинок із власним входом, хвірткою або воротами."],
+      "dependencies": ["private_entrance", "compatible_lock_or_gate"],
+      "included_features": ["video_intercom", "remote_unlock", "keyless_access", "tamper_notification"]
+    },
+    {
+      "system_id": "perimeter_security",
+      "name_uk": "Охорона периметра",
+      "category": "security",
+      "description": "Раннє виявлення проникнення на приватну ділянку до наближення до будинку.",
+      "property_types": ["house"],
+      "cost_class": "high",
+      "hard_prerequisites": ["Приватна ділянка або контрольований зовнішній периметр."],
+      "dependencies": ["private_plot", "outdoor_security_sensors"],
+      "included_features": ["perimeter_detection", "zone_alerts", "outdoor_siren", "security_integration"]
+    },
+    {
+      "system_id": "leak_protection",
+      "name_uk": "Захист від протікання",
+      "category": "engineering_safety",
+      "description": "Виявлення води та автоматичне перекриття водопостачання.",
+      "property_types": ["apartment", "house"],
+      "cost_class": "medium",
+      "hard_prerequisites": ["У житлі є хоча б одна водна зона."],
+      "dependencies": ["water_leak_sensors", "shutoff_valves"],
+      "included_features": ["leak_detection", "automatic_water_shutoff", "remote_notification"]
+    },
+    {
+      "system_id": "fire_safety",
+      "name_uk": "Пожежна безпека",
+      "category": "engineering_safety",
+      "description": "Виявлення диму, перегріву та інших ознак пожежної небезпеки з повідомленнями.",
+      "property_types": ["apartment", "house"],
+      "cost_class": "medium",
+      "hard_prerequisites": [],
+      "dependencies": ["fire_sensors", "notification_channel"],
+      "included_features": ["smoke_detection", "heat_detection", "local_alarm", "remote_notification"]
+    },
+    {
+      "system_id": "gas_co_detection",
+      "name_uk": "Контроль газу та чадного газу",
+      "category": "engineering_safety",
+      "description": "Виявлення витоку газу або чадного газу біля відповідних джерел ризику.",
+      "property_types": ["apartment", "house"],
+      "cost_class": "medium",
+      "hard_prerequisites": ["Є газові прилади, котел, камін, генератор або інше джерело ризику CO."],
+      "dependencies": ["gas_or_co_sensors", "notification_channel"],
+      "included_features": ["gas_detection", "co_detection", "local_alarm", "remote_notification"]
+    },
+    {
+      "system_id": "power_protection_monitoring",
+      "name_uk": "Моніторинг електроживлення та керування навантаженнями",
+      "category": "power",
+      "description": "Контроль параметрів мережі, споживання та кероване відключення навантажень.",
+      "property_types": ["apartment", "house"],
+      "cost_class": "medium",
+      "hard_prerequisites": ["Є доступ до електричної шафи для встановлення сумісного обладнання."],
+      "dependencies": ["compatible_electrical_panel", "metering_devices"],
+      "included_features": ["voltage_monitoring", "energy_metering", "load_control", "power_notifications"]
+    },
+    {
+      "system_id": "backup_power",
+      "name_uk": "Резервне живлення",
+      "category": "power",
+      "description": "Підтримка критичних навантажень від інвертора, акумуляторів або генератора під час відключень.",
+      "property_types": ["apartment", "house"],
+      "cost_class": "high",
+      "hard_prerequisites": ["Технічно допустиме місце та схема підключення резервного джерела."],
+      "dependencies": ["backup_power_source", "critical_loads_panel"],
+      "included_features": ["automatic_transfer", "battery_monitoring", "generator_monitoring", "load_shedding"]
+    },
+    {
+      "system_id": "multimedia_multiroom",
+      "name_uk": "Мультимедіа та мультирум",
+      "category": "multimedia",
+      "description": "Домашній кінотеатр, фонове аудіо та узгоджене відтворення в кількох кімнатах.",
+      "property_types": ["apartment", "house"],
+      "cost_class": "high",
+      "hard_prerequisites": [],
+      "dependencies": ["network_infrastructure", "audio_video_equipment"],
+      "included_features": ["home_cinema", "multiroom_audio", "media_scenes", "centralized_sources"]
+    },
+    {
+      "system_id": "gate_garage_control",
+      "name_uk": "Керування воротами та гаражем",
+      "category": "outdoor",
+      "description": "Дистанційне й сценарне керування воротами, хвірткою та гаражним доступом.",
+      "property_types": ["house"],
+      "cost_class": "medium",
+      "hard_prerequisites": ["Є або заплановані моторизовані ворота, хвіртка чи гаражні ворота."],
+      "dependencies": ["motorized_gate_or_garage", "position_sensors"],
+      "included_features": ["remote_opening", "position_status", "access_scenarios", "open_too_long_alert"]
+    },
+    {
+      "system_id": "irrigation_control",
+      "name_uk": "Автоматичний полив",
+      "category": "outdoor",
+      "description": "Керування зонами поливу за розкладом, погодою та станом ділянки.",
+      "property_types": ["house"],
+      "cost_class": "medium",
+      "hard_prerequisites": ["Є приватна ділянка та наявна або запланована система поливу."],
+      "dependencies": ["private_plot", "irrigation_valves", "water_supply"],
+      "included_features": ["zone_schedules", "weather_adjustment", "manual_remote_control", "fault_notification"]
+    },
+    {
+      "system_id": "pool_control",
+      "name_uk": "Керування басейном",
+      "category": "outdoor",
+      "description": "Моніторинг і автоматизація режимів роботи приватного басейну.",
+      "property_types": ["house"],
+      "cost_class": "high",
+      "hard_prerequisites": ["Є або запланований приватний басейн із керованим обладнанням."],
+      "dependencies": ["pool_equipment", "compatible_pool_controller"],
+      "included_features": ["filtration_schedules", "temperature_control", "water_parameter_monitoring", "fault_notification"]
+    },
+    {
+      "system_id": "roof_gutter_heating",
+      "name_uk": "Підігрів покрівлі та зовнішніх зон",
+      "category": "outdoor",
+      "description": "Автоматичний підігрів жолобів, покрівлі, сходів, доріжок або заїзду проти льоду й снігу.",
+      "property_types": ["house"],
+      "cost_class": "high",
+      "hard_prerequisites": ["Є приватні зовнішні зони з підтвердженим ризиком обмерзання."],
+      "dependencies": ["heating_cables", "weather_or_surface_sensors", "sufficient_electrical_capacity"],
+      "included_features": ["ice_detection", "automatic_heating", "zone_control", "energy_limits"]
+    },
+    {
+      "system_id": "septic_monitoring",
+      "name_uk": "Контроль септика",
+      "category": "outdoor",
+      "description": "Контроль стану автономної каналізації або септика та аварійні повідомлення.",
+      "property_types": ["house"],
+      "cost_class": "medium",
+      "hard_prerequisites": ["Є автономна каналізація або септик."],
+      "dependencies": ["septic_system", "level_or_fault_sensors"],
+      "included_features": ["level_monitoring", "fault_detection", "service_reminders", "remote_notification"]
+    }
+  ]
+}

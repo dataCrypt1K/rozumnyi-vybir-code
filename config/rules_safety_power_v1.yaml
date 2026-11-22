@@ -1,0 +1,64 @@
+{
+  "schema_version": "0.1",
+  "review_status": "draft_for_expert_review",
+  "base_score": 50,
+  "status_thresholds": {"recommended": 70, "optional": 40},
+  "systems": {
+    "fire_safety": {
+      "factor_group_caps": {"risk": 35, "property": 20, "lifestyle": 10, "preference": 20},
+      "hard_rules": [],
+      "score_rules": [
+        {"rule_id": "FIRE_SAFETY_HIGH", "question_id": "safety_priority", "operator": "gte", "value": 4, "points": 15, "factor_group": "preference", "reason": "Захист житла від аварій має високий пріоритет."},
+        {"rule_id": "FIRE_LARGE_AREA", "question_id": "home_area_m2", "operator": "gte", "value": 150, "points": 10, "factor_group": "property", "reason": "Велика площа ускладнює швидке виявлення пожежі людиною."},
+        {"rule_id": "FIRE_MULTIPLE_FLOORS", "question_id": "floor_count", "operator": "gte", "value": 2, "points": 10, "factor_group": "property", "reason": "Кілька поверхів підвищують користь розподіленого виявлення диму."},
+        {"rule_id": "FIRE_VULNERABLE_RESIDENTS", "question_id": "vulnerable_residents", "operator": "equals", "value": true, "points": 10, "factor_group": "risk", "reason": "Серед мешканців є люди, для яких особливо важливе раннє попередження."},
+        {"rule_id": "FIRE_BOILER_ROOM", "question_id": "boiler_room_present", "operator": "equals", "value": true, "points": 10, "factor_group": "risk", "reason": "Окрема котельня є додатковою зоною пожежного ризику."},
+        {"rule_id": "FIRE_COMBUSTION_SOURCE", "question_id": "gas_co_sources", "operator": "not_contains", "value": "none", "points": 10, "factor_group": "risk", "reason": "Є обладнання з горінням палива або інше джерело підвищеного ризику."},
+        {"rule_id": "FIRE_ABSENCE_OFTEN", "question_id": "absence_frequency", "operator": "in", "value": ["often", "extended"], "points": 10, "factor_group": "lifestyle", "reason": "Житло часто залишається без нагляду."},
+        {"rule_id": "FIRE_REMOTE_ALERTS_HIGH", "question_id": "emergency_notifications_interest", "operator": "gte", "value": 4, "points": 10, "factor_group": "preference", "reason": "Потрібні віддалені аварійні повідомлення."},
+        {"rule_id": "FIRE_LOW_NEED", "all": [{"question_id": "safety_priority", "operator": "lte", "value": 2}, {"question_id": "emergency_notifications_interest", "operator": "lte", "value": 2}, {"question_id": "gas_co_sources", "operator": "contains", "value": "none"}], "points": -20, "factor_group": "preference", "reason": "Низький пріоритет безпеки, відсутність джерел підвищеного ризику та потреби у повідомленнях."}
+      ]
+    },
+    "gas_co_detection": {
+      "factor_group_caps": {"source": 30, "property": 10, "preference": 20},
+      "hard_rules": [
+        {"rule_id": "GAS_CO_NO_SOURCE", "all": [{"question_id": "gas_co_sources", "operator": "contains", "value": "none"}], "result": "not_applicable", "reason": "Не зазначено газових приладів, каміна, генератора чи іншого джерела ризику газу або CO."}
+      ],
+      "score_rules": [
+        {"rule_id": "GAS_CO_GAS_APPLIANCE", "any": [{"question_id": "gas_co_sources", "operator": "contains", "value": "gas_stove"}, {"question_id": "gas_co_sources", "operator": "contains", "value": "gas_boiler"}], "points": 15, "factor_group": "source", "reason": "Є газовий прилад або газовий котел."},
+        {"rule_id": "GAS_CO_COMBUSTION_SOURCE", "any": [{"question_id": "gas_co_sources", "operator": "contains", "value": "fireplace"}, {"question_id": "gas_co_sources", "operator": "contains", "value": "solid_fuel_boiler"}, {"question_id": "gas_co_sources", "operator": "contains", "value": "generator"}], "points": 15, "factor_group": "source", "reason": "Є джерело потенційного утворення чадного газу."},
+        {"rule_id": "GAS_CO_BOILER_ROOM", "question_id": "boiler_room_present", "operator": "equals", "value": true, "points": 10, "factor_group": "property", "reason": "Окрема котельня потребує контролю аварійних газів."},
+        {"rule_id": "GAS_CO_ALERTS_HIGH", "question_id": "emergency_notifications_interest", "operator": "gte", "value": 4, "points": 10, "factor_group": "preference", "reason": "Користувачу важливі віддалені аварійні повідомлення."},
+        {"rule_id": "GAS_CO_SAFETY_HIGH", "question_id": "safety_priority", "operator": "gte", "value": 4, "points": 10, "factor_group": "preference", "reason": "Інженерна безпека має високий пріоритет."}
+      ]
+    },
+    "power_protection_monitoring": {
+      "factor_group_caps": {"monitoring": 25, "grid_risk": 15, "efficiency": 15, "control": 15},
+      "hard_rules": [],
+      "score_rules": [
+        {"rule_id": "POWER_MONITORING_HIGH", "question_id": "energy_monitoring_interest", "operator": "gte", "value": 4, "points": 20, "factor_group": "monitoring", "reason": "Потрібен контроль споживання та параметрів електромережі."},
+        {"rule_id": "POWER_ENERGY_PRIORITY_HIGH", "question_id": "energy_priority", "operator": "gte", "value": 4, "points": 10, "factor_group": "efficiency", "reason": "Енергоефективність має високий пріоритет."},
+        {"rule_id": "POWER_OUTAGES_FREQUENT", "question_id": "outage_frequency", "operator": "in", "value": ["weekly", "daily"], "points": 15, "factor_group": "grid_risk", "reason": "Відключення електроенергії трапляються часто."},
+        {"rule_id": "POWER_LOAD_SHEDDING_HIGH", "question_id": "load_shedding_interest", "operator": "gte", "value": 4, "points": 10, "factor_group": "control", "reason": "Потрібне автоматичне відключення некритичних навантажень."},
+        {"rule_id": "POWER_BACKUP_PRESENT", "question_id": "backup_power_sources", "operator": "not_contains", "value": "none", "points": 10, "factor_group": "control", "reason": "Є або планується резервне джерело, стан якого потрібно контролювати."},
+        {"rule_id": "POWER_REMOTE_HIGH", "question_id": "remote_control_interest", "operator": "gte", "value": 4, "points": 5, "factor_group": "monitoring", "reason": "Важливий дистанційний перегляд стану мережі."},
+        {"rule_id": "POWER_LOW_NEED", "all": [{"question_id": "energy_monitoring_interest", "operator": "lte", "value": 2}, {"question_id": "outage_frequency", "operator": "in", "value": ["never", "rarely"]}, {"question_id": "backup_power_sources", "operator": "contains", "value": "none"}], "points": -20, "factor_group": "monitoring", "reason": "Мережа стабільна, резервних джерел немає, моніторинг не становить інтересу."}
+      ]
+    },
+    "backup_power": {
+      "factor_group_caps": {"grid_risk": 35, "autonomy": 35, "infrastructure": 10, "control": 10},
+      "hard_rules": [],
+      "score_rules": [
+        {"rule_id": "BACKUP_OUTAGES_MONTHLY", "question_id": "outage_frequency", "operator": "equals", "value": "monthly", "points": 10, "factor_group": "grid_risk", "reason": "Відключення трапляються щонайменше щомісяця."},
+        {"rule_id": "BACKUP_OUTAGES_FREQUENT", "question_id": "outage_frequency", "operator": "in", "value": ["weekly", "daily"], "points": 25, "factor_group": "grid_risk", "reason": "Часті відключення суттєво підвищують потребу в автономності."},
+        {"rule_id": "BACKUP_DURATION_MEDIUM", "question_id": "outage_duration", "operator": "equals", "value": "one_to_four_hours", "points": 10, "factor_group": "grid_risk", "reason": "Відключення тривають від однієї до чотирьох годин."},
+        {"rule_id": "BACKUP_DURATION_LONG", "question_id": "outage_duration", "operator": "in", "value": ["four_to_eight_hours", "over_eight_hours"], "points": 20, "factor_group": "grid_risk", "reason": "Тривалі відключення потребують більшої автономності."},
+        {"rule_id": "BACKUP_AUTONOMY_HIGH", "question_id": "autonomy_priority", "operator": "gte", "value": 4, "points": 20, "factor_group": "autonomy", "reason": "Автономність має високий пріоритет."},
+        {"rule_id": "BACKUP_CRITICAL_LOADS", "question_id": "critical_loads", "operator": "not_contains", "value": "none", "points": 15, "factor_group": "autonomy", "reason": "Є навантаження, які повинні працювати під час відключення."},
+        {"rule_id": "BACKUP_SOURCE_PRESENT", "question_id": "backup_power_sources", "operator": "not_contains", "value": "none", "points": 10, "factor_group": "infrastructure", "reason": "Є або планується інвертор, акумулятор чи генератор."},
+        {"rule_id": "BACKUP_LOAD_SHEDDING_HIGH", "question_id": "load_shedding_interest", "operator": "gte", "value": 4, "points": 10, "factor_group": "control", "reason": "Потрібне автоматичне керування пріоритетами навантажень."},
+        {"rule_id": "BACKUP_LOW_NEED", "all": [{"question_id": "outage_frequency", "operator": "in", "value": ["never", "rarely"]}, {"question_id": "autonomy_priority", "operator": "lte", "value": 2}, {"question_id": "critical_loads", "operator": "contains", "value": "none"}], "points": -30, "factor_group": "autonomy", "reason": "Відключення майже відсутні, критичних навантажень немає, автономність має низький пріоритет."}
+      ]
+    }
+  }
+}

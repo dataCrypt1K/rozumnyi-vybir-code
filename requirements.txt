@@ -1,0 +1,13 @@
+pydantic>=2.0,<3
+PyYAML>=6.0,<7
+streamlit[auth]>=1.50,<2
+SQLAlchemy>=2.0,<3
+alembic>=1.13,<2
+psycopg[binary]>=3.1,<4
+reportlab>=4.0,<5
+pypdf>=5.0,<7
+pypdfium2>=4.30,<6
+Pillow>=10,<13
+openpyxl>=3.1,<4
+numpy>=1.26,<3
+matplotlib>=3.8,<4
